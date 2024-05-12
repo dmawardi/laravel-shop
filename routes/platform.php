@@ -121,7 +121,7 @@ Route::screen('categories', CategoryListScreen::class)
 
 Route::screen('category/{category?}', CategoryEditScreen::class)
     ->name('platform.categories.edit')
-    ->breadcrumbs(function (Trail $trail, $category){
+    ->breadcrumbs(function (Trail $trail, $category = null){
         if ($category) {
             return $trail
                 ->parent('platform.categories.list')

@@ -2,18 +2,26 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\Category;
 use Orchid\Screen\Screen;
 
 class CategoryEditScreen extends Screen
 {
     /**
+     * @var Category
+     */
+    public $category;
+
+    /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(Category $category): iterable
     {
-        return [];
+        return [
+            'category' => $category,
+        ];
     }
 
     /**

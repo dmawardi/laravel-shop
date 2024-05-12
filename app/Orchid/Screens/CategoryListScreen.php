@@ -2,9 +2,12 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\Category;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class CategoryListScreen extends Screen
 {
@@ -15,7 +18,9 @@ class CategoryListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'categories' => Category::paginate(),
+        ];
     }
 
     /**
@@ -26,6 +31,11 @@ class CategoryListScreen extends Screen
     public function name(): ?string
     {
         return 'CategoryListScreen';
+    }
+
+    public function description(): ?string
+    {
+        return "All categories";
     }
 
     /**
@@ -39,7 +49,7 @@ class CategoryListScreen extends Screen
              // Make button to send to edit screen
              Link::make('Create new')
              ->icon('pencil')
-             ->route('platform.products.edit')
+             ->route('platform.categories.edit')
         ];
     }
 
@@ -50,6 +60,8 @@ class CategoryListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+           
+        ];
     }
 }

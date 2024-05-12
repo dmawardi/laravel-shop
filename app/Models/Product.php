@@ -11,4 +11,9 @@ class Product extends Model
     use HasFactory, AsSource;
 
     protected $guarded = [];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

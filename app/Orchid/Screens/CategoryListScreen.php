@@ -31,7 +31,7 @@ class CategoryListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'CategoryListScreen';
+        return 'Categories';
     }
 
     public function description(): ?string

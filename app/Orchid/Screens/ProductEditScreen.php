@@ -127,17 +127,17 @@ class ProductEditScreen extends Screen
             'product.price' => 'required|numeric',
             'product.sku' => 'required',
             'product.category_id' => 'required|numeric',
-            'product.image_url' => 'required|url',
+            'product.image_url' => 'nullable|url',
         ]);
 
         // Fill the product with the request data
         $this->product->fill([
-            'name' => $request->get('product.name'),
-            'description' => $request->get('product.description'),
-            'price' => $request->get('product.price'),
-            'sku' => $request->get('product.sku'),
-            'category_id' => $request->get('product.category_id'),
-            'image_url' => $request->get('product.image_url'),
+            'name' => $request->input('product.name'),
+            'description' => $request->input('product.description'),
+            'price' => $request->input('product.price'),
+            'sku' => $request->input('product.sku'),
+            'category_id' => $request->input('product.category_id'),
+            'image_url' => $request->input('product.image_url'),
         ])->save();
 
         Alert::info('You have successfully created a product.');

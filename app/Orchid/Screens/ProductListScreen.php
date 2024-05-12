@@ -5,6 +5,7 @@ namespace App\Orchid\Screens;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Screen;
 use App\Models\Product;
+use App\Orchid\Layouts\ProductListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -64,6 +65,8 @@ class ProductListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            ProductListLayout::class
+        ];
     }
 }

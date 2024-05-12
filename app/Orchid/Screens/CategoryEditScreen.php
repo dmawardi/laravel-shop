@@ -37,7 +37,12 @@ class CategoryEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'CategoryEditScreen';
+        return $this->category->exists ? 'Edit category' : 'Creating a new category';
+    }
+
+    public function description(): ?string
+    {
+        return "Create a brand new category in the database";
     }
 
     /**

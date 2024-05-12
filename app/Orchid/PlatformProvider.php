@@ -34,18 +34,27 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
+            // Core
             Menu::make(__('Users'))
                 ->icon('bs.people')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
                 ->title(__('Access Controls')),
-
             Menu::make(__('Roles'))
                 ->icon('bs.shield')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles')
                 ->divider(),
 
+            // Catalog
+            Menu::make(__('Products'))
+                ->icon('bs.bag')
+                ->route('platform.products.list')
+                ->title(__('Catalog')),
+            Menu::make(__('Categories'))
+                ->icon('bs.grid-3x3-gap')
+                ->route('platform.categories.list')
+                ->divider(),
         ];
     }
 

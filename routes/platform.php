@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\CategoryEditScreen;
+use App\Orchid\Screens\CategoryListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -12,6 +14,8 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\ProductEditScreen;
+use App\Orchid\Screens\ProductListScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -84,21 +88,48 @@ Route::screen('roles', RoleListScreen::class)
         ->parent('platform.index')
         ->push(__('Roles'), route('platform.systems.roles')));
 
-// Example...
-Route::screen('example', ExampleScreen::class)
-    ->name('platform.example')
-    ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.index')
-        ->push('Example Screen'));
+// New screens
+Route::screen('products', ProductListScreen::class)
+    ->name('platform.products.list')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Products');
+    });
 
-Route::screen('/examples/form/fields', ExampleFieldsScreen::class)->name('platform.example.fields');
-Route::screen('/examples/form/advanced', ExampleFieldsAdvancedScreen::class)->name('platform.example.advanced');
-Route::screen('/examples/form/editors', ExampleTextEditorsScreen::class)->name('platform.example.editors');
-Route::screen('/examples/form/actions', ExampleActionsScreen::class)->name('platform.example.actions');
+Route::screen('product/{product?}', ProductEditScreen::class)
+    ->name('platform.products.edit')
+    ->breadcrumbs(function (Trail $trail, $product = null){
+        if ($product) {
+            return $trail
+                ->parent('platform.products.list')
+                ->push($product->id, route('platform.products.edit', $product));
+        } else {
+            // Handle the case where $product is null
+            return $trail
+                ->parent('platform.products.list');
+        }
+        });
 
-Route::screen('/examples/layouts', ExampleLayoutsScreen::class)->name('platform.example.layouts');
-Route::screen('/examples/grid', ExampleGridScreen::class)->name('platform.example.grid');
-Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.example.charts');
-Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
+Route::screen('categories', CategoryListScreen::class)
+    ->name('platform.categories.list')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Categories');
+    });
 
+Route::screen('category/{category?}', CategoryEditScreen::class)
+    ->name('platform.categories.edit')
+    ->breadcrumbs(function (Trail $trail, $category){
+        if ($category) {
+            return $trail
+                ->parent('platform.categories.list')
+                ->push($category->id, route('platform.categories.edit', $category));
+        } else {
+            // Handle the case where $category is null
+            return $trail
+                ->parent('platform.categories.list');
+        }
+        });
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

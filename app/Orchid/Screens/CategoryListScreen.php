@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens;
 
 use App\Models\Category;
+use App\Orchid\Layouts\CategoryListLayout;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
@@ -61,7 +62,7 @@ class CategoryListScreen extends Screen
     public function layout(): iterable
     {
         return [
-           
+           CategoryListLayout::class
         ];
     }
 }

@@ -3,13 +3,36 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Orchid\Support\Facades\Alert;
 
 class CartController extends Controller
 {
     public function store(Request $request)
     {
-        
+        // dd($request->all());
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer',
+            'name' => 'required|string',
+            'price' => 'required|numeric',
+            'image' => 'nullable|string',
+            'quantity' => 'nullable|integer'
+        ]);
+        // $request->validate([
+        //     'id' => 'required|integer',
+        //     'name' => 'required|string',
+        //     'price' => 'required|numeric',
+        //     'image' => 'required|string',
+        //     'quantity' => 'nullable|integer'
+        // ]);
+
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->with('fail', 'Failed to add product to cart!');
+        }
         // Get the cart session
         $cart = session()->get('cart', []);
         // Calculate the item subtotal
@@ -34,7 +57,6 @@ class CartController extends Controller
         // Update the cart session
         session()->put('cart', $cart);
 
-        Alert::success('Success', 'Product added to cart successfully!');
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 

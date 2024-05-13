@@ -69,4 +69,9 @@ class CartController extends Controller
         session()->put('cart', $cart);
         return redirect()->back()->with('success', 'Product removed from cart successfully');
     }
+
+    public function checkout()
+    {
+        return view('cart.checkout');
+    }
 }

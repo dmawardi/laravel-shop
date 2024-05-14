@@ -21,4 +21,9 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function shippingInformation()
+    {
+        return $this->hasOne(ShippingInformation::class);
+    }
 }

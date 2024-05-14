@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
 
-class Order extends Model
+class OrderItem extends Model
 {
     use HasFactory, AsSource;
 
     public $guarded = [];
 
-    public function items()
+    public function order()
     {
-        return $this->hasMany(OrderItem::class);
+        return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

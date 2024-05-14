@@ -6,19 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Screen\AsSource;
 
-class Order extends Model
+class Payment extends Model
 {
     use HasFactory, AsSource;
 
     public $guarded = [];
 
-    public function items()
+    public function order()
     {
-        return $this->hasMany(OrderItem::class);
-    }
-
-    public function payment()
-    {
-        return $this->hasOne(Payment::class);
+        return $this->belongsTo(Order::class);
     }
 }

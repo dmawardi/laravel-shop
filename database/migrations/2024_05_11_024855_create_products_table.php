@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->string('sku')->unique();
             $table->unsignedBigInteger('category_id');
-            $table->string('image_url')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');

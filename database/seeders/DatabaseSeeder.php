@@ -28,10 +28,7 @@ class DatabaseSeeder extends Seeder
 
         // Create 2 categories with 10 products each
         Category::factory(2)->withProducts(10)->create();
-       
-        Order::factory(10)->create();
-        OrderItem::factory(10)->create();
-        Payment::factory(10)->create();
-        ShippingInformation::factory(10)->create();
+        // Create 10 Orders with complete order items, payment, and shipping information
+        Order::factory(10)->withCompleteOrder()->create();
     }
 }

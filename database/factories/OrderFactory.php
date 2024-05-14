@@ -32,4 +32,18 @@ class OrderFactory extends Factory
             'shipped_at' => $this->faker->dateTimeBetween('-1 month', 'now')
         ];
     }
+
+    /**
+     * Indicate that the order is pending.
+     *
+     * @return \Database\Factories\OrderFactory
+     */
+    public function pending(): OrderFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'status' => 'pending',
+            ];
+        });
+    }
 }

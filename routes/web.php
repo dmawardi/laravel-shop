@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,9 @@ Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.ch
 // Order routes
 Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('order.show');
+
+// Payment
+Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.submit');
 
 
 

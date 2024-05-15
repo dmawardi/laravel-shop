@@ -74,7 +74,7 @@
         </div>
     </div>
     {{-- Payment instructions --}}
-    <div class="w-full md:w-4/12 mx-auto px-6">
+    <div class="w-full lg:w-4/12 mx-auto px-6">
         @if ($order->payment->payment_method === 'credit_card')
             <h3 class="font-medium">Payment Information</h3>
             @include('form._ccpayment')

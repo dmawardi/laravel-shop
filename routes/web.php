@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,6 +32,7 @@ Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.ch
 // Order routes
 Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
 Route::get('/orders/{order}', [OrderController::class, 'show'])->name('order.show');
+Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
 
 // Payment
 Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.submit');

@@ -71,6 +71,13 @@ class OrderController extends Controller
         'Yogyakarta'
     ];
 
+    public function index(Request $request)
+    {
+        $orders = Order::where('user_id', auth()->id())->latest()->get();
+
+        return view('order.index', compact('orders'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([

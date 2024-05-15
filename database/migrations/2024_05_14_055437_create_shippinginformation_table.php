@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('address_line2')->nullable();
             $table->string('city');
             $table->string('state');
-            $table->string('country');
+            $table->string('country')->default('Indonesia');
             $table->string('postal_code');
             $table->timestamps();
         });

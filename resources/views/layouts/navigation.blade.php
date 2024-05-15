@@ -9,17 +9,15 @@
                 </a>
             </div>
             <div class="flex items-center">
-                {{-- Logged in links --}}
+                <!-- Navigation Links -->
                 @auth
                     <div>
-                        <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                                 {{ __('Dashboard') }}
                             </x-nav-link>
                         </div>
                     </div>
-
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
                         <x-dropdown align="right" width="48">
@@ -58,8 +56,20 @@
                         </x-dropdown>
                     </div>
                 @endauth
+                @guest
+                    <div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                                {{ __('Login') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                                {{ __('Register') }}
+                            </x-nav-link>
+                        </div>
+                    </div>
+                @endguest
 
-                {{-- Smaller screens --}}
+                {{-- SMALLER SCREEN ONLY --}}
                 <!-- Hamburger -->
                 <div class="-me-2 flex items-center sm:hidden">
                     <button @click="open = ! open"

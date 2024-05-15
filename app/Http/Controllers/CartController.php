@@ -10,7 +10,6 @@ class CartController extends Controller
 {
     public function store(Request $request)
     {
-        // dd($request->all());
         // Validate the request
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer',
@@ -19,13 +18,7 @@ class CartController extends Controller
             'image' => 'nullable|string',
             'quantity' => 'nullable|integer'
         ]);
-        // $request->validate([
-        //     'id' => 'required|integer',
-        //     'name' => 'required|string',
-        //     'price' => 'required|numeric',
-        //     'image' => 'required|string',
-        //     'quantity' => 'nullable|integer'
-        // ]);
+      
 
         // Check if the validation fails
         if ($validator->fails()) {
@@ -94,6 +87,11 @@ class CartController extends Controller
 
     public function checkout()
     {
+        // Check if user is logged in, if not send to login page
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('fail', 'You need to login to checkout');
+        }
+        // Else, proceed to checkout
         return view('cart.checkout');
     }
 }

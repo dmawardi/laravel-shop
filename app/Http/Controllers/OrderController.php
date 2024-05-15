@@ -79,7 +79,7 @@ class OrderController extends Controller
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255|in:' . implode(',', $this->states),
             // 'country' => 'required|string|max:255',
-            'postal_code' => 'required|numeric|max:255',
+            'postal_code' => 'required|numeric',
             'payment_method' => 'required|string'
         ]);
 

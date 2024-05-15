@@ -29,7 +29,9 @@ Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart
 Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 
 // Order routes
-Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('order.show');
+
 
 
 // Route::resource('categories', CategoryController::class);

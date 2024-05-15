@@ -1,6 +1,8 @@
 {{-- Credit Card Information --}}
 <div>
-    <div>
+    <form action="/payment/submit" method="POST">
+        @csrf
+
         <x-input-label for="card_number" value="Card Number" />
         <x-text-input name="card_number" placeholder="Card Number" class="w-full p-2 border rounded mb-2"
             :value="old('card_number')" />
@@ -13,5 +15,5 @@
         <x-input-label for="card_cvc" value="CVC" />
         <x-text-input name="card_cvc" placeholder="CVC" class="w-full p-2 border rounded mb-2" :value="old('card_cvc')" />
         <x-input-error :messages="$errors->get('card_cvc')" />
-    </div>
+    </form>
 </div>

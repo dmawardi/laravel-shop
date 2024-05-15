@@ -78,12 +78,11 @@ class OrderController extends Controller
             'address_line2' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
             'state' => 'required|string|max:255|in:' . implode(',', $this->states),
-            // 'country' => 'required|string|max:255',
+            'country' => 'nullable|string|max:255',
             'postal_code' => 'required|numeric',
             'payment_method' => 'required|string'
         ]);
 
-        dd(auth()->id());
         $cart = session('cart');
         $subtotal = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
@@ -123,12 +122,18 @@ class OrderController extends Controller
             'address_line2' => $request->address_line2,
             'city' => $request->city,
             'state' => $request->state,
-            'country' => $request->country,
+            'country' => "Indonesia",
             'postal_code' => $request->postal_code,
         ]);
 
         session()->forget('cart');  // Clear the cart after the order is placed
 
-        return redirect()->route('orders.success')->with('success', 'Order placed successfully.');
+        // Redirect to the order details page of the newly created order
+        return redirect()->route('order.show', $order)->with('success', 'Order created.');
+    }
+
+    public function show(Request $request, Order $order)
+    {
+        return view('order.show', compact('order'));
     }
 }

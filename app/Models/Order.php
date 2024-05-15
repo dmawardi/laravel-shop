@@ -26,4 +26,9 @@ class Order extends Model
     {
         return $this->hasOne(ShippingInformation::class);
     }
+
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

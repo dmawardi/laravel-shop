@@ -3,9 +3,13 @@
 namespace App\Orchid\Screens;
 
 use App\Models\Order;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
 use Orchid\Screen\TD;
+use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 
 class OrderListScreen extends Screen
@@ -15,10 +19,29 @@ class OrderListScreen extends Screen
      *
      * @return array
      */
-    public function query(): array
+    public function query(Request $request): array
     {
+        // Build a query to fetch inquiries
+        $query = Order::query();
+        // If a search query is present, filter the inquiries
+        if ($request->filled('search')) {
+            // Validate the search term
+            $request->validate([
+                'search' => 'required|string|max:255',
+            ]);
+            // Get the search term from the request
+            $search = $request->input('search');
+            $query->where('status', 'like', "%{$search}%")
+            ->orWhere('payment_status', 'like', "%{$search}%")
+            ->orWhere('payment_method', 'like', "%{$search}%")
+            ->orWhere('transaction_id', 'like', "%{$search}%")
+            ->orWhere('total', 'like', "%{$search}%")
+            ->orWhereHas('buyer', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            });
+        }
         return [
-            'orders' => Order::with('payment', 'shippingInformation')->paginate()
+            'orders' => $query->with('payment', 'shippingInformation')->paginate()
         ];
     }
 
@@ -54,7 +77,18 @@ class OrderListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [
+        return [ // Search bar
+            Layout::rows([
+                Input::make('search')
+                    ->type('text')
+                    ->placeholder('Search...')
+                    ->value(request()->query('search')),
+                Button::make('Search')
+                    ->method('handleSearch')  // Assuming you handle the request in a method called `search`
+                    ->type(Color::SUCCESS())
+                    ->icon('magnifier')
+            ]),
+            // Table
             Layout::table('orders', [
                 // Define columns
                 TD::make('id', 'ID')
@@ -65,6 +99,10 @@ class OrderListScreen extends Screen
                 TD::make('user_id', 'User')
                     ->render(function (Order $order) {
                         return $order->buyer->name;
+                    }),
+                TD::make('state', 'State')
+                    ->render(function (Order $order) {
+                        return $order->shippingInformation->state ?? 'N/A';
                     }),
                TD::make('status', 'Status'),
                 TD::make('total', 'Total'),
@@ -79,4 +117,13 @@ class OrderListScreen extends Screen
             ]),
         ];
     }
+     // Used as button handler to reroute to the same page with search values saved
+     public function handleSearch(Request $request)
+     {
+         // Get the search term from the request
+         $searchTerm = $request->input('search');
+
+         // Redirect back to the screen with the search parameter to show results
+         return redirect()->route('platform.orders.list', ['search' => $searchTerm]);
+     }
 }

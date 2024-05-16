@@ -13,6 +13,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\OrderEditScreen;
+use App\Orchid\Screens\OrderListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\ProductEditScreen;
 use App\Orchid\Screens\ProductListScreen;
@@ -132,4 +134,25 @@ Route::screen('category/{category?}', CategoryEditScreen::class)
                 ->parent('platform.categories.list');
         }
         });
-//Route::screen('idea', Idea::class, 'platform.screens.idea');
+
+Route::screen('orders', OrderListScreen::class)
+    ->name('platform.orders.list')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail
+            ->parent('platform.index')
+            ->push('Orders');
+    });
+
+Route::screen('order/{order?}', OrderEditScreen::class)
+    ->name('platform.orders.edit')
+    ->breadcrumbs(function (Trail $trail, $order = null){
+        if ($order) {
+            return $trail
+                ->parent('platform.orders.list')
+                ->push($order->id, route('platform.orders.edit', $order));
+        } else {
+            // Handle the case where $order is null
+            return $trail
+                ->parent('platform.orders.list');
+        }
+        });

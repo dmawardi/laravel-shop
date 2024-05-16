@@ -10,67 +10,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    // public function store(Request $request)
-    // {
-    //     dd($request->all());
-    //     // Get the cart session
-    //     $cart = session()->get('cart', []);
-
-    //     // Check if the cart is empty
-    //     if (empty($cart)) {
-    //         return redirect()->route('products.index')->with('error', 'Your cart is empty!');
-    //     }
-
-    //     // Create a new order
-    //     $order = [
-    //         'order_number' => 'ORD-'.strtoupper(uniqid()),
-    //         'items' => $cart,
-    //         'total' => array_sum(array_column($cart, 'subtotal')),
-    //         'status' => 'pending',
-    //     ];
-
-    //     // Clear the cart session
-    //     session()->forget('cart');
-
-    //     return redirect()->route('products.index')->with('success', 'Order placed successfully!');
-    // }
-    public $states = [
-        'Aceh',
-        'Bali',
-        'Banten',
-        'Bengkulu',
-        'Gorontalo',
-        'Jakarta',
-        'Jambi',
-        'Jawa Barat',
-        'Jawa Tengah',
-        'Jawa Timur',
-        'Kalimantan Barat',
-        'Kalimantan Selatan',
-        'Kalimantan Tengah',
-        'Kalimantan Timur',
-        'Kalimantan Utara',
-        'Kepulauan Bangka Belitung',
-        'Kepulauan Riau',
-        'Lampung',
-        'Maluku',
-        'Maluku Utara',
-        'Nusa Tenggara Barat',
-        'Nusa Tenggara Timur',
-        'Papua',
-        'Papua Barat',
-        'Riau',
-        'Sulawesi Barat',
-        'Sulawesi Selatan',
-        'Sulawesi Tengah',
-        'Sulawesi Tenggara',
-        'Sulawesi Utara',
-        'Sumatera Barat',
-        'Sumatera Selatan',
-        'Sumatera Utara',
-        'Yogyakarta'
-    ];
-
     public function index(Request $request)
     {
         $orders = Order::where('user_id', auth()->id())->latest()->get();
@@ -84,7 +23,7 @@ class OrderController extends Controller
             'address_line1' => 'required|string|max:255|min:5',
             'address_line2' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
-            'state' => 'required|string|max:255|in:' . implode(',', $this->states),
+            'state' => 'required|string|max:255|in:' . implode(',', ShippingInformation::$states),
             'country' => 'nullable|string|max:255',
             'postal_code' => 'required|numeric',
             'payment_method' => 'required|string'

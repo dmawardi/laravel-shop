@@ -55,6 +55,10 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.grid-3x3-gap')
                 ->route('platform.categories.list')
                 ->divider(),
+            Menu::make(__('Orders'))
+                ->icon('bs.cart')
+                ->route('platform.orders.list')
+                ->title(__('Sales')),
         ];
     }
 

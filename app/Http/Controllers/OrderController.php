@@ -29,6 +29,7 @@ class OrderController extends Controller
             'payment_method' => 'required|string'
         ]);
 
+        // dd($request->all());
         $cart = session('cart');
         $subtotal = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
@@ -41,8 +42,6 @@ class OrderController extends Controller
             'tax' => $subtotal * 0.1,  // Assuming 10% tax rate
             'shipping_fee' => 15,  // Assuming a flat rate shipping fee
             'total' => $subtotal * 1.1 + 15,
-            'payment_status' => 'pending',
-            'payment_method' => $request->payment_method
         ]);
 
         foreach ($cart as $item) {
@@ -59,7 +58,7 @@ class OrderController extends Controller
             'order_id' => $order->id,
             'amount' => $order->total,
             'payment_method' => $request->payment_method,
-            'status' => 'pending',
+            'status' => 'Pending',
         ]);
 
         ShippingInformation::create([

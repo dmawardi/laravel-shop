@@ -165,7 +165,7 @@ class OrderListScreen extends Screen
                 TD::make('subtotal', 'Subtotal'),
                 TD::make('tax', 'Tax'),
                 TD::make('shipping_fee', 'Shipping Fee'),
-                TD::make('payment_status', 'Payment Status')
+                TD::make('payment.status', 'Payment Status')
                 ->filter(TD::FILTER_SELECT, [
                     'Paid' => 'Paid',
                     'Unpaid' => 'Unpaid',

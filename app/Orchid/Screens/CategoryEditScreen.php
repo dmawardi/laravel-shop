@@ -40,11 +40,6 @@ class CategoryEditScreen extends Screen
         return $this->category->exists ? 'Edit category' : 'Creating a new category';
     }
 
-    public function description(): ?string
-    {
-        return "Create a brand new category in the database";
-    }
-
     /**
      * The screen's action buttons.
      *

@@ -11,7 +11,6 @@
 
                     @include('form._shipping')
                     @include('form._payment-method')
-                    @include('form._payment')
 
 
                     {{-- Errors --}}

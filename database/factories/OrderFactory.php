@@ -29,8 +29,6 @@ class OrderFactory extends Factory
             'tax' => $this->faker->numberBetween(5, 500),
             'shipping_fee' => $this->faker->numberBetween(5, 100),
             'discount' => $this->faker->numberBetween(5, 200),
-            'payment_status' => $this->faker->randomElement(['Paid', 'Unpaid', 'Refunded', 'Cancelled', 'Pending']),
-            'payment_method' => $this->faker->randomElement(['Credit Card', 'PayPal', 'Bank Transfer', 'Stripe', 'Cash on Delivery']),
             'transaction_id' => $this->faker->uuid,
             'paid_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'shipped_at' => $this->faker->dateTimeBetween('-1 month', 'now')
@@ -61,8 +59,8 @@ class OrderFactory extends Factory
             Payment::factory()->create([
                 'order_id' => $order->id,
                 'amount' => $order->total,
-                'payment_method' => $order->payment_method,
-                'status' => $order->payment_status,
+                'payment_method' => $this->faker->randomElement(['Credit Card', 'PayPal', 'Bank Transfer', 'Stripe', 'Cash on Delivery']),
+                'status' => 'Unpaid',
                 'transaction_id' => $order->transaction_id
             ]);
 

@@ -23,14 +23,14 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'status' => $this->faker->randomElement(['pending', 'processing', 'shipped', 'delivered', 'cancelled']),
+            'status' => $this->faker->randomElement(['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled', 'Refunded', 'Completed']),
             'total' => $this->faker->numberBetween(100, 5000),
             'subtotal' => $this->faker->numberBetween(100, 5000),
             'tax' => $this->faker->numberBetween(5, 500),
             'shipping_fee' => $this->faker->numberBetween(5, 100),
             'discount' => $this->faker->numberBetween(5, 200),
-            'payment_status' => $this->faker->randomElement(['pending', 'completed', 'failed']),
-            'payment_method' => $this->faker->randomElement(['credit card', 'PayPal', 'bank transfer']),
+            'payment_status' => $this->faker->randomElement(['Paid', 'Unpaid', 'Refunded', 'Cancelled', 'Pending']),
+            'payment_method' => $this->faker->randomElement(['Credit Card', 'PayPal', 'Bank Transfer', 'Stripe', 'Cash on Delivery']),
             'transaction_id' => $this->faker->uuid,
             'paid_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'shipped_at' => $this->faker->dateTimeBetween('-1 month', 'now')

@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens;
 
 use App\Models\Order;
+use App\Models\ShippingInformation;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -39,6 +40,53 @@ class OrderListScreen extends Screen
             ->orWhereHas('buyer', function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%");
             });
+        }
+
+         // Apply filters
+         if ($request->filled('filter')) {
+            $filters = $request->input('filter');
+
+            if (!empty($filters['status'])) {
+                $statuses = is_array($filters['status']) ? $filters['status'] : explode(',', $filters['status']);
+                $query->whereIn('status', $statuses);
+            }
+            if (!empty($filters['payment_status'])) {
+                $statuses = is_array($filters['payment_status']) ? $filters['payment_status'] : explode(',', $filters['payment_status']);
+                $query->whereIn('payment_status', $statuses);
+            }
+            if (!empty($filters['payment_method'])) {
+                $methods = is_array($filters['payment_method']) ? $filters['payment_method'] : explode(',', $filters['payment_method']);
+                $query->whereIn('payment_method', $methods);
+            }
+            // Foreign data filters
+            if (!empty($filters['state'])) {
+                $query->whereHas('shippingInformation', function ($query) use ($filters) {
+                    $states = is_array($filters['state']) ? $filters['state'] : explode(',', $filters['state']);
+                    $query->whereIn('state', $states);
+                });
+            }
+
+            // Dates
+            if (!empty($filters['shipped_at'])) {
+                $dateRange = $request->input('filter.shipped_at');
+                $startDate = $dateRange['start'] ?? null;
+                $endDate = $dateRange['end'] ?? null;
+
+                // Apply date range to query if both dates are available
+                if ($startDate && $endDate) {
+                    $query->whereBetween('shipped_at', [$startDate, $endDate]);
+                }
+            }
+            if (!empty($filters['paid_at'])) {
+                $dateRange = $request->input('filter.paid_at');
+                $startDate = $dateRange['start'] ?? null;
+                $endDate = $dateRange['end'] ?? null;
+
+                // Apply date range to query if both dates are available
+                if ($startDate && $endDate) {
+                    $query->whereBetween('paid_at', [$startDate, $endDate]);
+                }
+            }
         }
         return [
             'orders' => $query->with('payment', 'shippingInformation')->paginate()
@@ -103,17 +151,46 @@ class OrderListScreen extends Screen
                 TD::make('state', 'State')
                     ->render(function (Order $order) {
                         return $order->shippingInformation->state ?? 'N/A';
-                    }),
-               TD::make('status', 'Status'),
+                    })
+                    ->filter(TD::FILTER_SELECT, ShippingInformation::$states),
+               TD::make('status', 'Status')
+               ->filter(TD::FILTER_SELECT, [
+                   'Pending' => 'Pending',
+                   'Processing' => 'Processing',
+                   'Completed' => 'Completed',
+                   'Cancelled' => 'Cancelled',
+                   'Refunded' => 'Refunded',
+                ]),
                 TD::make('total', 'Total'),
                 TD::make('subtotal', 'Subtotal'),
                 TD::make('tax', 'Tax'),
                 TD::make('shipping_fee', 'Shipping Fee'),
-                TD::make('payment_status', 'Payment Status'),
-                TD::make('payment_method', 'Payment Method'),
+                TD::make('payment_status', 'Payment Status')
+                ->filter(TD::FILTER_SELECT, [
+                    'Paid' => 'Paid',
+                    'Unpaid' => 'Unpaid',
+                    'Pending' => 'Pending',
+                    'Refunded' => 'Refunded',
+                    'Cancelled' => 'Cancelled',
+                ]),
+                TD::make('payment_method', 'Payment Method')
+                ->filter(TD::FILTER_SELECT, [
+                    'Credit Card' => 'Credit Card',
+                    'PayPal' => 'PayPal',
+                    'Stripe' => 'Stripe',
+                    'Cash on Delivery' => 'Cash on Delivery',
+                ]),
                 TD::make('transaction_id', 'Transaction ID'),
-                TD::make('paid_at', 'Paid At'),
-                TD::make('shipped_at', 'Shipped At'),
+                TD::make('paid_at', 'Paid At')
+                ->filter(TD::FILTER_DATE_RANGE)
+                ->render(function ($model) {
+                    return $model->paid_at ? $model->paid_at : '';
+                }),
+                TD::make('shipped_at', 'Shipped At')
+                ->filter(TD::FILTER_DATE_RANGE)
+                ->render(function ($model) {
+                    return $model->shipped_at ? $model->shipped_at : '';
+                }),
             ]),
         ];
     }

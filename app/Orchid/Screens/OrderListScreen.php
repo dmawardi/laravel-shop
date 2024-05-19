@@ -173,7 +173,7 @@ class OrderListScreen extends Screen
                     'Refunded' => 'Refunded',
                     'Cancelled' => 'Cancelled',
                 ]),
-                TD::make('payment_method', 'Payment Method')
+                TD::make('payment.payment_method', 'Payment Method')
                 ->filter(TD::FILTER_SELECT, [
                     'Credit Card' => 'Credit Card',
                     'PayPal' => 'PayPal',

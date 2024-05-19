@@ -83,11 +83,8 @@ class OrderEditScreen extends Screen
      */
     public function layout(): iterable
     {
-       
-        return [
-            Layout::view('cart._cart'), // Include the cart view
-
-            Layout::rows([
+        $layout = [];
+        $formFields = Layout::rows([
                 // User field
                 Select::make('order.user_id')
                     ->title('Buyer')
@@ -183,8 +180,24 @@ class OrderEditScreen extends Screen
                     ])
                     ->help('Select the payment status of the order')
                     ->value($this->order->payment->status),
-            ]),
-        ];
+            ]);
+        
+            // If new item, add the current cart to the view
+            if (!$this->order->exists) {
+                $layout = [
+                Layout::view('cart._cart'), // Include the cart view
+                // Existing layout elements
+                $formFields,
+            ];
+                
+            } else {
+                $layout = [
+                    $formFields
+                ];
+            }
+
+       
+        return $layout;
     }
 
     public function createOrUpdate(Order $order, Request $request)
@@ -211,33 +224,39 @@ class OrderEditScreen extends Screen
             $subtotal = array_sum(array_map(function ($item) {
                 return $item['price'] * $item['quantity'];
             }, $cart));
-        }
-    
-        // Fill the order data
+
+            // Fill the order data
         $order->fill([
-            'user_id' => auth()->id(),
-            'status' => $request->input('order.status'),
             'subtotal' => $subtotal,
             'tax' => $subtotal * 0.1,  // Assuming 10% tax rate
             'shipping_fee' => 15,  // Assuming a flat rate shipping fee
             'total' => $subtotal * 1.1 + 15,
+        ]);
+        }
+    
+        // Fill the order data
+        $order->fill([
+            'user_id' => $request->input('order.user_id'),
+            'status' => $request->input('order.status'),
             'payment_method' => $request->input('order.payment_method'),
             'paid_at' => $request->input('order.paid_at'),
             'shipped_at' => $request->input('order.shipped_at'),
         ])->save();
     
-        // Create or update the order items
-        foreach ($cart as $item) {
-            OrderItem::updateOrCreate(
-                ['order_id' => $order->id, 'product_id' => $item['id']],
-                ['quantity' => $item['quantity'], 'price' => $item['price'], 'subtotal' => $item['price'] * $item['quantity']]
-            );
-        }
+        // // Create or update the order items
+        // foreach ($cart as $item) {
+        //     OrderItem::updateOrCreate(
+        //         ['order_id' => $order->id, 'product_id' => $item['id']],
+        //         ['quantity' => $item['quantity'], 'price' => $item['price'], 'subtotal' => $item['price'] * $item['quantity']]
+        //     );
+        // }
     
         // Create or update the payment information
         $order->payment()->updateOrCreate(
             ['order_id' => $order->id],
-            ['amount' => $order->total, 'payment_method' => $request->input('order.payment_method'), 'status' => $request->input('order.payment.status')]
+            ['amount' => $order->total, 
+            'payment_method' => $request->input('order.payment_method'), 
+            'status' => $request->input('order.payment.status')]
         );
     
         // Create or update the shipping information

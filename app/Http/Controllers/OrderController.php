@@ -37,7 +37,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => auth()->id(),
-            'status' => 'pending',
+            'status' => 'Pending',
             'subtotal' => $subtotal,
             'tax' => $subtotal * 0.1,  // Assuming 10% tax rate
             'shipping_fee' => 15,  // Assuming a flat rate shipping fee

@@ -8,6 +8,7 @@ use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ShippingInformation;
 use App\Models\User;
+use App\Orchid\Layouts\OrderItemLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
@@ -16,6 +17,7 @@ use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Fields\DateTimer;
+use Orchid\Screen\Fields\Label;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
@@ -32,13 +34,13 @@ class OrderEditScreen extends Screen
      */
     public function query(Order $order): array
     {
-        $order->with(['buyer', 'payment', 'shippingInformation']);
+        $order->with(['buyer', 'payment', 'shippingInformation', 'items']);
         
         return [
             'order' => $order,
-            'user' => $order->user,
-            'payment' => $order->payment,
-            'shippingInformation' => $order->shippingInformation,
+            // 'user' => $order->user,
+            // 'payment' => $order->payment,
+            // 'shippingInformation' => $order->shippingInformation,
         ];
     }
 
@@ -188,6 +190,7 @@ class OrderEditScreen extends Screen
                 ->value($orderExists ? $this->order->payment->status : null),
             ]);
         
+            
             // If new item, add the current cart to the view
             if (!$this->order->exists) {
                 $layout = [
@@ -199,19 +202,31 @@ class OrderEditScreen extends Screen
                 
             } else {
                 // Print out existing order items associated with order
-                // $orderItems = $this->order->items;
-                $orderItemTable = Layout::table('orderItems', [
-                        TD::make('orderItems', 'Order Items')
-                            ->render(function (Order $order) {
-                        return $order->items->map(function ($item) {
-                            return $item->product_name . ' (x' . $item->quantity . ')';
-                        })->implode('<br>');
-                    }),
-                        ]);
-                   
-                
+                $orderItemInfo = Layout::rows([
+                    Label::make('subtotal')
+                        ->title('Subtotal')
+                        ->value($this->order->subtotal),
+        
+                    Label::make('tax')
+                        ->title('Tax')
+                        ->value($this->order->tax),
+        
+                    Label::make('discount')
+                        ->title('Discount')
+                        ->value($this->order->discount),
+        
+                    Label::make('shipping_fee')
+                        ->title('Shipping Fee')
+                        ->value($this->order->shipping_fee),
+        
+                    Label::make('total')
+                        ->title('Total')
+                        ->value($this->order->total),
+                ]);
+
                 $layout = [
-                    $orderItemTable,
+                    OrderItemLayout::class,
+                    $orderItemInfo,
                     $formFields
                 ];
             }
@@ -236,6 +251,13 @@ class OrderEditScreen extends Screen
             'order.shipped_at' => 'nullable|date',
         ]);
 
+        if (!session()->has('cart')) {
+            // Display error message
+            Alert::error('Cart is empty. Please add items to the cart before creating an order.');
+
+            // Redirect back to the cart
+            return redirect()->back();
+        }
         // Creating a new order
         $cart = session('cart');
         $subtotal = array_sum(array_map(function ($item) {

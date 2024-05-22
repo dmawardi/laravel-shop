@@ -20,6 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
+            'slug' => $this->faker->unique()->slug(),
         ];
     }
 

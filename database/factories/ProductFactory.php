@@ -16,10 +16,12 @@ class ProductFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
+    {  
         return [
             'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
+            'quantity' => $this->faker->numberBetween(1, 100),
+            'slug' => $this->faker->unique()->slug(),
             'price' => $this->faker->randomFloat(2, 1, 100),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->unique()->uuid(),

@@ -4,8 +4,10 @@
         <div class="grid grid-cols-3 gap-4">
             @foreach ($products as $product)
                 <div class="border p-4">
-                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 object-cover mb-2">
-                    <h3 class="text-md font-semibold">{{ $product->name }}</h3>
+                    <a href="{{ route('product.show', $product->slug) }}">
+                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 object-cover mb-2">
+                        <h3 class="text-md font-semibold">{{ $product->name }}</h3>
+                    </a>
                     <p>${{ $product->price }}</p>
                     <form action="{{ route('cart.store') }}" method="POST">
                         @csrf

@@ -91,7 +91,7 @@ class OrderEditScreen extends Screen
         $formFields = Layout::rows([
              // Link to products page
              Link::make('Add Products')
-             ->route('products.index')
+             ->route('product.index')
              ->icon('plus'),
             // User field
             Select::make('order.user_id')

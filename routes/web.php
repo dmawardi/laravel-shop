@@ -27,7 +27,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
 Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('checkout.index');
 
 // Order routes
 Route::post('/orders', [OrderController::class, 'store'])->name('order.store');
@@ -41,6 +41,7 @@ Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.su
 
 // Route::resource('categories', CategoryController::class);
 // Route::resource('products', ProductController::class);
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
 
 require __DIR__.'/auth.php';

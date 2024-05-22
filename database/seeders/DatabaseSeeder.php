@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\ShippingInformation;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,5 +31,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(2)->withProducts(10)->create();
         // Create 10 Orders with complete order items, payment, and shipping information
         Order::factory(10)->withCompleteOrder()->create();
+        // Create reviews
+        Review::factory(50)->create();
     }
 }

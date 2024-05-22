@@ -42,6 +42,6 @@ Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.su
 // Route::resource('categories', CategoryController::class);
 // Route::resource('products', ProductController::class);
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
 require __DIR__.'/auth.php';

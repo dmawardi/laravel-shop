@@ -9,7 +9,12 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $categories = \App\Models\Category::all();
+    // dd($categories);
+    return view('home', [
+        'categories' => $categories,
+        // 'products' => \App\Models\Product::take(8)->get(),
+    ]);
 })->name('home');
 
 Route::get('/dashboard', function () {
@@ -37,11 +42,13 @@ Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
 // Payment
 Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.submit');
 
+// Categories
+Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/{category}/subcategories/{subcategory}', [CategoryController::class, 'showSubcategory'])->name('categories.subcategories.show');
 
-
-// Route::resource('categories', CategoryController::class);
-// Route::resource('products', ProductController::class);
+// Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+
 
 require __DIR__.'/auth.php';

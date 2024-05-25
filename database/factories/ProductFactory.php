@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Category;
 use App\Models\Subsubcategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -18,11 +19,12 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {  
+        $slug = Str::slug($this->faker->unique()->word(2));
         return [
             'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
             'quantity' => $this->faker->numberBetween(1, 100),
-            'slug' => $this->faker->unique()->slug(),
+            'slug' => $slug,
             'price' => $this->faker->randomFloat(2, 1, 100),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->unique()->uuid(),

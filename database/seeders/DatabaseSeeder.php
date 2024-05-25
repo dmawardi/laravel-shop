@@ -12,7 +12,8 @@ use App\Models\ShippingInformation;
 use App\Models\Subcategory;
 use App\Models\Subsubcategory;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Faker\Factory as FakerFactory; // Add this import statement
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,11 +24,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
 
         $baseCategories = [
             'Make Up',
@@ -43,30 +39,45 @@ class DatabaseSeeder extends Seeder
             $category = Category::factory()->create([
                 'name' => $category,
             ]);
-            // Create a subcategory
-            $subcategory = Subcategory::factory()->create([
+
+            // Reset the faker instance
+            // FakerFactory::create()->unique(true);
+            // Create subcategories in category
+            $subcategories = Subcategory::factory(2)->create([
                 'category_id' => $category->id,
             ]);
-            // Create a subsubcategory
-            Subsubcategory::factory()->create([
-                'subcategory_id' => $subcategory->id,
-            ]);
-            // Create 10 products within the subsubcategory
-            $products = Product::factory(10)->create([
-                'subsubcategory_id' => $subcategory->id,
-            ]);
+            // Create subsubcategories in subcategory
+            foreach ($subcategories as $subcategory) {
+                // Reset the faker instance
+                // FakerFactory::create()->unique(true);
 
-            // Create 10 reviews for each product
-            foreach ($products as $product) {
-                Review::factory(10)->create([
-                    'product_id' => $product->id,
+                // Create subcategories
+                $subsubcategories = Subsubcategory::factory(2)->create([
+                    'subcategory_id' => $subcategory->id,
                 ]);
+                foreach ($subsubcategories as $subsubcategory) {
+                    // Reset the faker instance
+                    // FakerFactory::create()->unique(true);
+
+                    // Create 10 products within the subsubcategory
+                        $products = Product::factory(2)->create([
+                            'subsubcategory_id' => $subsubcategory->id,
+                        ]);
+
+                        // Create 10 reviews for each product
+                        foreach ($products as $product) {
+                            Review::factory(3)->create([
+                                'product_id' => $product->id,
+                            ]);
+                        }
+                }
             }
         }
 
+        FakerFactory::create()->unique(true);
 
         // Create 10 Orders with complete order items, payment, and shipping information
-        // Order::factory(10)->withCompleteOrder()->create();
+        Order::factory()->withCompleteOrder()->create();
         // // Create reviews
         // Review::factory(50)->create();
     }

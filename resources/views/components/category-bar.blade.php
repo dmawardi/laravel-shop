@@ -17,14 +17,24 @@
             <div x-show="open" @mouseover="open = true" @mouseleave="open = false"
                 class="absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                 <div class="py-1">
-                    {{-- @if ($category->subcategories->isNotEmpty())
+                    @if ($category->subcategories->isNotEmpty())
+                        {{-- Sub categories --}}
                         @foreach ($category->subcategories as $subcategory)
                             <a href="{{ route('categories.subcategories.show', [$category->slug, $subcategory->slug]) }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                class="block px-4 py-2 text-sm font-bold text-gray-700 hover:bg-gray-100">
                                 {{ $subcategory->name }}
                             </a>
+                            {{-- Sub sub categories --}}
+                            @if ($subcategory->subsubcategories->isNotEmpty())
+                                @foreach ($subcategory->subsubcategories as $subsubcategory)
+                                    <a href="{{ route('categories.subcategories.show', [$category->slug, $subcategory->slug, $subsubcategory->slug]) }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        {{ $subsubcategory->name }}
+                                    </a>
+                                @endforeach
+                            @endif
                         @endforeach
-                    @endif --}}
+                    @endif
                 </div>
             </div>
         </div>

@@ -44,9 +44,9 @@ class DatabaseSeeder extends Seeder
             'subsubcategory_id' => $subcategory->id,
         ]);
 
-        // // Create 10 Orders with complete order items, payment, and shipping information
-        // Order::factory(10)->withCompleteOrder()->create();
-        // // // Create reviews
-        // Review::factory(50)->create();
+        // Create 10 Orders with complete order items, payment, and shipping information
+        Order::factory(10)->withCompleteOrder()->create();
+        // Create reviews
+        Review::factory(50)->create();
     }
 }

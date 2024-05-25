@@ -2,7 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
+use App\Models\Subsubcategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -30,11 +33,4 @@ class CategoryFactory extends Factory
      * @param  int  $count Number of products to create in each category.
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
-    public function withProducts($count = 10)
-    {
-        return $this->has(
-            Product::factory()->count($count), // Create $count products
-            'products'  // This should match the relationship name defined in the Category model
-        );
-    }
 }

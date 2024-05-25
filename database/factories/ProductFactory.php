@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\Subsubcategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,7 +26,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 100),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->unique()->uuid(),
-            'category_id' => Category::factory(),
+            'subsubcategory_id' => Subsubcategory::factory(),
         ];
     }
 }

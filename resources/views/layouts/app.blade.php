@@ -24,7 +24,7 @@
     <div class="min-h-screen bg-gray-100">
         {{-- Navigation --}}
         <x-navigation />
-        <x-category-bar :categories="$categories" />
+        <x-bottom-nav-bar :categories="$categories" />
 
         <!-- Page Heading -->
         @if (isset($header))

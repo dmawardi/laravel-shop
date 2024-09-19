@@ -44,7 +44,13 @@ Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.su
 
 // Categories
 Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
+
+// Subcategories
 Route::get('/categories/{category}/subcategories/{subcategory}', [CategoryController::class, 'showSubcategory'])->name('categories.subcategories.show');
+
+// Sub Subcategories
+Route::get('/categories/{category}/subcategories/{subcategory}/subsubcategories/{subsubcategory}', [CategoryController::class, 'showSubSubcategory'])->name('categories.subcategories.subsubcategories.show');
+
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');

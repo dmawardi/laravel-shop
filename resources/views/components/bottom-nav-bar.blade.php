@@ -13,7 +13,7 @@
             </button>
 
             <!-- Dropdown content -->
-            <div class="dropdown-content absolute mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden group-hover:block">
+            <div class="dropdown-content absolute w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden group-hover:block">
                 <div class="py-1">
                     @if ($category->subcategories->isNotEmpty())
                         {{-- Sub categories --}}

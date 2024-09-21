@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 100),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->unique()->uuid(),
-            'subsubcategory_id' => Subsubcategory::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }

@@ -43,18 +43,18 @@ Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
 Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.submit');
 
 // Categories
-Route::get('/categories/{category}', [CategoryController::class, 'show'])->name('categories.show');
-
-// Subcategories
-Route::get('/categories/{category}/subcategories/{subcategory}', [CategoryController::class, 'showSubcategory'])->name('categories.subcategories.show');
-
-// Sub Subcategories
-Route::get('/categories/{category}/subcategories/{subcategory}/subsubcategories/{subsubcategory}', [CategoryController::class, 'showSubSubcategory'])->name('categories.subcategories.subsubcategories.show');
-
+Route::get('/shop/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 // Products
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+
+// Brands
+// Route::get('/brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+// Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+
+// Collections
+// Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
 
 
 require __DIR__.'/auth.php';

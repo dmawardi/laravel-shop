@@ -18,12 +18,12 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->string('sku')->unique();
-            $table->unsignedBigInteger('subsubcategory_id');
             $table->integer('quantity');
             $table->string('image')->nullable();
             $table->timestamps();
 
-            $table->foreign('subsubcategory_id')->references('id')->on('subsubcategories');
+            // Foreign keys
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
         });
     }
 

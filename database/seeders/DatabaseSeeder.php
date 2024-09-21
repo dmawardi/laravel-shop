@@ -34,44 +34,26 @@ class DatabaseSeeder extends Seeder
             'Tools & Brushes'
         ];
 
+        
         foreach ($baseCategories as $category) {
             // Create a category
             $category = Category::factory()->create([
                 'name' => $category,
             ]);
+            
+            // Create 10 products within the category
+            $products = Product::factory(2)->create([
+               'category_id' => $category->id,
+           ]);
+    
+           // Create 10 reviews for each product
+           foreach ($products as $product) {
+               Review::factory(3)->create([
+                   'product_id' => $product->id,
+               ]);
+           }
 
-            // Reset the faker instance
-            // FakerFactory::create()->unique(true);
-            // Create subcategories in category
-            $subcategories = Subcategory::factory(2)->create([
-                'category_id' => $category->id,
-            ]);
-            // Create subsubcategories in subcategory
-            foreach ($subcategories as $subcategory) {
-                // Reset the faker instance
-                // FakerFactory::create()->unique(true);
-
-                // Create subcategories
-                $subsubcategories = Subsubcategory::factory(2)->create([
-                    'subcategory_id' => $subcategory->id,
-                ]);
-                foreach ($subsubcategories as $subsubcategory) {
-                    // Reset the faker instance
-                    // FakerFactory::create()->unique(true);
-
-                    // Create 10 products within the subsubcategory
-                        $products = Product::factory(2)->create([
-                            'subsubcategory_id' => $subsubcategory->id,
-                        ]);
-
-                        // Create 10 reviews for each product
-                        foreach ($products as $product) {
-                            Review::factory(3)->create([
-                                'product_id' => $product->id,
-                            ]);
-                        }
-                }
-            }
+          
         }
 
         FakerFactory::create()->unique(true);

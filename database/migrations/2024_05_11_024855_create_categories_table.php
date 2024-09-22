@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('slug')->unique();
+            // Parent category
+            $table->foreignId('parent_id')->nullable();
+            $table->foreign('parent_id')->references('id')->on('categories')->nullOnDelete();
         });
     }
 

@@ -59,13 +59,8 @@ class DatabaseSeeder extends Seeder
 
           
         }
-
-        FakerFactory::create()->unique(true);
-
-        // Create 10 Orders with complete order items, payment, and shipping information
-        Order::factory()->withCompleteOrder()->create();
-        // // Create reviews
-        // Review::factory(50)->create();
+        // Create order with complete order items, payment, and shipping information
+        // Order::factory()->withCompleteOrder()->create();
     }
 
     // Function to determine if a category should have a parent

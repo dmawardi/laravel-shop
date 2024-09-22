@@ -15,6 +15,7 @@ use App\Models\User;
 use Faker\Factory as FakerFactory; // Add this import statement
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,9 +37,12 @@ class DatabaseSeeder extends Seeder
 
         
         foreach ($baseCategories as $category) {
+            // Randomly determine if the category should have a parent. If so, who
+            $parentCategory = self::determineParentId();
             // Create a category
             $category = Category::factory()->create([
                 'name' => $category,
+                'parent_id' => $parentCategory,
             ]);
             
             // Create 10 products within the category
@@ -62,5 +66,25 @@ class DatabaseSeeder extends Seeder
         Order::factory()->withCompleteOrder()->create();
         // // Create reviews
         // Review::factory(50)->create();
+    }
+
+    // Function to determine if a category should have a parent
+    private function determineParentId()
+    {
+        // Fetch all existing category IDs
+        $existingCategoryIds = DB::table('categories')->pluck('id')->all();
+
+        // Check if there are existing categories to choose from
+        if (empty($existingCategoryIds)) {
+            return null; // No categories exist, so parent_id should be null
+        }
+
+        // Randomly decide if there should be a parent (50% chance)
+        if (rand(0, 1) === 1) {
+            // Randomly select an existing category ID
+            return $existingCategoryIds[array_rand($existingCategoryIds)];
+        }
+
+        return null; // No parent, so return null
     }
 }

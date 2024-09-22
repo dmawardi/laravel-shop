@@ -27,6 +27,7 @@ class CategoryFactory extends Factory
             'name' => $this->faker->unique()->word(),
             'description' => $this->faker->sentence(),
             'slug' => $slug,
+            'parent_id' => null,
         ];
     }
 

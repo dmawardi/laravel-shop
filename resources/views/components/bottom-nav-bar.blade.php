@@ -14,7 +14,7 @@
         </div>
         <!-- Dropdown content -->
         <!-- Sub categories -->
-        <div class="dropdown-content absolute w-screen top-full left-0 right-0 rounded-md shadow-lg ring-1 ring-black ring-opacity-5"
+        <div class="dropdown-content absolute w-screen top-full left-0 right-0 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 hidden"
                 data-category-id="{{ $category->id }}"
                 x-transition:enter="transition ease-out duration-150"
                 x-transition:enter-start="opacity-0 transform scale-95"
@@ -22,7 +22,7 @@
                 x-transition:leave="transition ease-in duration-100"
                 x-transition:leave-start="opacity-100 transform scale-100"
                 x-transition:leave-end="opacity-0 transform scale-95">
-                <div class="flex flex-row mx-auto w-2/3">
+                <div class="flex flex-row flex-wrap mx-auto w-2/3">
                     @foreach($category->children as $subcategory)
                         <div class="basis-1/3">
                             <a href="{{ route('categories.show', [$subcategory->slug]) }}"

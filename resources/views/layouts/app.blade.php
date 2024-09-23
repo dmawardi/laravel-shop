@@ -1,3 +1,4 @@
+@props(['categories'])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -24,7 +25,7 @@
     <div class="min-h-screen bg-gray-100">
         {{-- Navigation --}}
         <x-navigation />
-        <x-bottom-nav-bar :categories="$categories" />
+        <x-bottom-nav-bar/>
 
         <!-- Page Heading -->
         @if (isset($header))

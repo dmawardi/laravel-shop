@@ -6,13 +6,12 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $categories = \App\Models\Category::all();
-    // dd($categories);
+    
     return view('home', [
-        'categories' => $categories,
         // 'products' => \App\Models\Product::take(8)->get(),
     ]);
 })->name('home');

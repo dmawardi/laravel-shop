@@ -19,15 +19,16 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {  
-        $slug = Str::slug($this->faker->unique()->word(2));
+        $this->faker->unique(true); // Resets the unique checks
+        $slug = Str::slug($this->faker->unique()->slug(3));
         return [
-            'name' => $this->faker->unique()->word(),
+            'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'quantity' => $this->faker->numberBetween(1, 100),
             'slug' => $slug,
             'price' => $this->faker->randomFloat(2, 1, 100),
             'image' => 'https://via.placeholder.com/150',
-            'sku' => $this->faker->unique()->uuid(),
+            'sku' => $this->faker->uuid(),
             'category_id' => Category::factory(),
         ];
     }

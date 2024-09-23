@@ -22,9 +22,11 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $slug = Str::slug($this->faker->unique()->word());
+        $this->faker->unique(true); // Resets the unique checks
+
+        $slug = Str::slug($this->faker->unique()->slug(3));
         return [
-            'name' => $this->faker->unique()->word(),
+            'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
             'slug' => $slug,
             'parent_id' => null,

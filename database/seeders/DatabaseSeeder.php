@@ -37,29 +37,27 @@ class DatabaseSeeder extends Seeder
 
         
         foreach ($baseCategories as $category) {
-            // Randomly determine if the category should have a parent. If so, who
-            $parentCategory = self::determineParentId();
             // Create a category
-            $category = Category::factory()->create([
+            $subcategory = Category::factory()->create([
                 'name' => $category,
             ]);
 
 
-            // Create 2 subcategories within the category
-            for ($i = 0; $i < 2; $i++) {
+            // Create 4 subcategories within the category
+            for ($i = 0; $i < 4; $i++) {
                 $subcategory = Category::factory()->create([
-                    'parent_id' => $category->id,
+                    'parent_id' => $subcategory->id,
                 ]);
 
-                // Create 2 subsubcategories within the subcategory
-                for ($j = 0; $j < 2; $j++) {
-                    Category::factory()->create([
+                // Create 4 subsubcategories within the subcategory
+                for ($j = 0; $j < 4; $j++) {
+                    $subsubCategory = Category::factory()->create([
                         'parent_id' => $subcategory->id,
                     ]);
 
                     // Create 2 products within the category
                     $products = Product::factory(2)->create([
-                        'category_id' => $category->id,
+                        'category_id' => $subsubCategory->id,
                     ]);
             
                     // Create 10 reviews for each product

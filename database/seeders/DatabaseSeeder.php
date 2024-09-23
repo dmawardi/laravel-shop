@@ -42,20 +42,34 @@ class DatabaseSeeder extends Seeder
             // Create a category
             $category = Category::factory()->create([
                 'name' => $category,
-                'parent_id' => $parentCategory,
             ]);
+
+
+            // Create 2 subcategories within the category
+            for ($i = 0; $i < 2; $i++) {
+                $subcategory = Category::factory()->create([
+                    'parent_id' => $category->id,
+                ]);
+
+                // Create 2 subsubcategories within the subcategory
+                for ($j = 0; $j < 2; $j++) {
+                    Category::factory()->create([
+                        'parent_id' => $subcategory->id,
+                    ]);
+
+                    // Create 2 products within the category
+                    $products = Product::factory(2)->create([
+                        'category_id' => $category->id,
+                    ]);
             
-            // Create 10 products within the category
-            $products = Product::factory(2)->create([
-               'category_id' => $category->id,
-           ]);
-    
-           // Create 10 reviews for each product
-           foreach ($products as $product) {
-               Review::factory(3)->create([
-                   'product_id' => $product->id,
-               ]);
-           }
+                    // Create 10 reviews for each product
+                    foreach ($products as $product) {
+                        Review::factory(3)->create([
+                            'product_id' => $product->id,
+                        ]);
+                    }
+                }
+            }
 
           
         }

@@ -10,7 +10,9 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    
+    $categories = Category::whereNull('parent_id')->get();
+    $categories->load('childrenRecursive');
+    dump($categories);
     return view('home', [
         // 'products' => \App\Models\Product::take(8)->get(),
     ]);

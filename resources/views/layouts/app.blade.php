@@ -43,5 +43,5 @@
     </div>
 </body>
 
-<script src="{{ mix('resources/js/collection-row.js') }}"></script>
+<script src="{{ mix('resources/js/animations.js') }}"></script>
 </html>

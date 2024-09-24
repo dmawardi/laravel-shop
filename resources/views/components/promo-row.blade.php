@@ -5,29 +5,14 @@
             <!-- Promo Panels -->
             <div class="flex transition-transform duration-500 ease-in-out" id="promo-panels">
                 <!-- Promo Panel 1 -->
-                <div class="w-full md:w-1/3 flex-shrink-0 p-4">
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col items-center justify-center p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Promo 1</h3>
-                        <p class="text-gray-600">This is the description for promo 1. Amazing deals await you!</p>
-                        <a href="#" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Learn More</a>
+                 <!-- Loop to create promo panels -->
+                @for($i = 1; $i <= 3; $i++)
+                    <div class="w-full md:w-1/3 flex-shrink-0 m-1">
+                        <a href="https://example.com/promo{{ $i }}" class="block rounded-lg overflow-hidden shadow-md">
+                            <img src="https://via.placeholder.com/600x400?text=Promo+{{ $i }}" alt="Promo {{ $i }}" class="w-full h-auto object-cover">
+                        </a>
                     </div>
-                </div>
-                <!-- Promo Panel 2 -->
-                <div class="w-full md:w-1/3 flex-shrink-0 p-4">
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col items-center justify-center p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Promo 2</h3>
-                        <p class="text-gray-600">Don't miss out on promo 2. Limited time offer!</p>
-                        <a href="#" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Learn More</a>
-                    </div>
-                </div>
-                <!-- Promo Panel 3 -->
-                <div class="w-full md:w-1/3 flex-shrink-0 p-4">
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col items-center justify-center p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Promo 3</h3>
-                        <p class="text-gray-600">Get the best deals with promo 3. Shop now!</p>
-                        <a href="#" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Learn More</a>
-                    </div>
-                </div>
+                @endfor
             </div>
 
             <!-- Navigation Buttons -->

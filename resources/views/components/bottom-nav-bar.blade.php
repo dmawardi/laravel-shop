@@ -14,7 +14,7 @@
         </div>
         <!-- Dropdown content -->
         <!-- Sub categories -->
-        <div class="dropdown-content absolute w-screen top-full left-0 right-0 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 hidden"
+        <div class="dropdown-content absolute w-screen top-full left-0 right-0 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 hidden z-50"
                 data-category-id="{{ $category->id }}"
                 x-transition:enter="transition ease-out duration-150"
                 x-transition:enter-start="opacity-0 transform scale-95"

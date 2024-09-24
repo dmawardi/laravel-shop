@@ -1,5 +1,5 @@
 <!-- Carousel Container -->
-<div class="relative w-2/3 overflow-hidden mx-auto">
+<div class="relative w-2/3 overflow-hidden mx-auto group">
     <!-- Slides -->
     <div id="carousel" class="flex transition-transform duration-500">
         <!-- Slide 1 -->
@@ -23,10 +23,10 @@
     </div>
 
     <!-- Navigation Buttons -->
-    <button id="carousel-prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
+    <button id="carousel-prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl opacity-0 group-hover:opacity-50 transition-opacity duration-400">
         <
     </button>
-    <button id="carousel-next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
+    <button id="carousel-next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl opacity-0 group-hover:opacity-50 transition-opacity duration-400">
         >
     </button>
 </div>

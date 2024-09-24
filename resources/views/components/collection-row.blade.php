@@ -1,13 +1,14 @@
-@props(['title' => '', 'products' => []])
+@props(['title' => '', 'subtitle'=>'', 'products' => []])
 <div class="bg-gray-100 py-8">
     <div class="container mx-auto px-4">
         <!-- Section Title -->
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ $title }}</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-1">{{ $title }}</h2>
+        <span>{{$subtitle}}</span>
         
         <!-- Carousel Container -->
         <div class="relative" id="carousel-{{ Str::slug($title) }}">
             <!-- Product Row -->
-            <div class="product-carousel flex transition-transform duration-500 ease-in-out" data-carousel-id="{{ Str::slug($title) }}">
+            <div class="product-carousel flex transition-transform duration-200 ease-in-out" data-carousel-id="{{ Str::slug($title) }}">
                 <!-- Product Card -->
                 @foreach($products as $product)
                     <div class="w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 p-2">

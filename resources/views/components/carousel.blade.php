@@ -2,24 +2,14 @@
 <div class="relative w-2/3 overflow-hidden mx-auto group">
     <!-- Slides -->
     <div id="carousel" class="flex transition-transform duration-500">
-        <!-- Slide 1 -->
+        <!-- Loop to create 3 slides -->
+         @for($i = 1; $i <= 3; $i++)
         <div class="w-full flex-shrink-0">
-            <a href="/promotion-1">
-                <img src="https://via.placeholder.com/800x400?text=Promotion+1" alt="Promotion 1" class="w-full h-auto object-cover">
+            <a href="/promotion-{{ $i }}">
+                <img src="https://via.placeholder.com/800x400?text=Promotion+{{ $i }}" alt="Promotion {{ $i }}" class="w-full h-auto object-cover">
             </a>
         </div>
-        <!-- Slide 2 -->
-        <div class="w-full flex-shrink-0">
-            <a href="/promotion-2">
-                <img src="https://via.placeholder.com/800x400?text=Promotion+2" alt="Promotion 2" class="w-full h-auto object-cover">
-            </a>
-        </div>
-        <!-- Slide 3 -->
-        <div class="w-full flex-shrink-0">
-            <a href="/promotion-3">
-                <img src="https://via.placeholder.com/800x400?text=Promotion+3" alt="Promotion 3" class="w-full h-auto object-cover">
-            </a>
-        </div>
+        @endfor
     </div>
 
     <!-- Navigation Buttons -->

@@ -1,7 +1,8 @@
+@props(['title' => '', 'products' => []])
 <div class="bg-gray-100 py-8">
     <div class="container mx-auto px-4">
         <!-- Section Title -->
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Featured Products</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">{{$title}}</h2>
         
         <!-- Carousel Container -->
         <div class="relative">
@@ -24,7 +25,7 @@
             </div>
 
             <!-- Navigation Buttons -->
-            <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-3 rounded-full shadow-md">
+            <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-3 rounded-full shadow-md opacity-50 hidden">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -44,10 +45,15 @@
         const carousel = document.getElementById('product-carousel');
         const prevButton = document.getElementById('prev');
         const nextButton = document.getElementById('next');
+
+        // Get all items and calculate width
         const items = carousel.children;
-        const itemWidth = items[0].offsetWidth + 16; // Width of one item including margin
-        const visibleItems = Math.floor(carousel.parentElement.offsetWidth / itemWidth);
+        let itemWidth = items[0].offsetWidth + 16; // Width of one item including margin
+        let visibleItems = Math.floor(carousel.parentElement.offsetWidth / itemWidth);
         let index = 0;
+
+        // Update button visibility initially
+        updateButtonVisibility();
 
         prevButton.addEventListener('click', function() {
             if (index > 0) {
@@ -57,19 +63,46 @@
         });
 
         nextButton.addEventListener('click', function() {
-            if (index < items.length - visibleItems) {
+            // Check if there are more items to show
+            if (index < items.length - visibleItems-1) {
                 index++;
                 updateCarousel();
             }
         });
 
+        // Update carousel position
         function updateCarousel() {
             carousel.style.transform = `translateX(-${index * itemWidth}px)`;
+            updateButtonVisibility(); // Check button visibility after moving
         }
 
-        // Update carousel on window resize
+        // Update button visibility based on current index and visible items
+        function updateButtonVisibility() {
+            // Hide prev button if at the first item
+            if (index === 0) {
+                prevButton.classList.add('hidden');
+                prevButton.disabled = true;
+            } else {
+                prevButton.classList.remove('hidden');
+                prevButton.disabled = false;
+            }
+
+            // Hide next button if last item is fully visible
+            if (index >= items.length - visibleItems-1) {
+                nextButton.classList.add('hidden');
+                nextButton.disabled = true;
+            } else {
+                nextButton.classList.remove('hidden');
+                nextButton.disabled = false;
+            }
+        }
+
+        // Recalculate the number of visible items and update the carousel on window resize
         window.addEventListener('resize', function() {
-            updateCarousel();
+            // Recalculate item width and visible items
+            itemWidth = items[0].offsetWidth + 16;
+            visibleItems = Math.floor(carousel.parentElement.offsetWidth / itemWidth);
+            updateCarousel(); // Adjust carousel position based on new visible items
         });
     });
 </script>

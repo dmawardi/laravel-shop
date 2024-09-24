@@ -14,11 +14,6 @@
                 <x-nav-search-bar />
                 <!-- Navigation Links -->
                 <div class="hidden space-x-2 sm:-my-px sm:ms-10 sm:flex">
-
-                    <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
-                        {{ __('Products') }}
-                    </x-nav-link>
-
                     {{-- When logged in --}}
                     @auth
                         <x-nav-link :href="route('order.index')" :active="request()->routeIs('orders.index')">
@@ -103,9 +98,6 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
         <!-- Responsive Links -->
         <div class="pt-2 pb-3 space-y-1 border-t border-gray-200 bg-white">
-            <x-responsive-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
-                {{ __('Products') }}
-            </x-responsive-nav-link>
             @auth
                 <x-responsive-nav-link :href="route('order.index')" :active="request()->routeIs('orders.index')">
                     {{ __('Orders') }}

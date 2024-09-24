@@ -10,10 +10,8 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $categories = Category::whereNull('parent_id')->get();
-    $categories->load('childrenRecursive');
     return view('home', [
-        // 'products' => \App\Models\Product::take(8)->get(),
+        'products' => \App\Models\Product::take(8)->get(),
     ]);
 })->name('home');
 
@@ -46,8 +44,8 @@ Route::post('/payments', [PaymentController::class, 'submit'])->name('payment.su
 Route::get('/shop/{category}', [CategoryController::class, 'show'])->name('categories.show');
 
 // Products
-Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('product.show');
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Brands
 // Route::get('/brands/{brand}', [BrandController::class, 'show'])->name('brands.show');

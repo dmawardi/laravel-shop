@@ -1,3 +1,4 @@
 <x-app-layout>
-    <x-hero-section></x-hero-section>
+    <x-carousel></x-carousel>
+    <x-collection-row :products="$products"></x-collection-row>
 </x-app-layout>

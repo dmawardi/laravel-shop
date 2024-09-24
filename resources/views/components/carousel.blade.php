@@ -23,10 +23,10 @@
     </div>
 
     <!-- Navigation Buttons -->
-    <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
+    <button id="carousel-prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
         <
     </button>
-    <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
+    <button id="carousel-next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl">
         >
     </button>
 </div>
@@ -39,7 +39,7 @@
         const totalSlides = slides.length;
         let index = 0;
 
-        document.getElementById('next').addEventListener('click', function() {
+        document.getElementById('carousel-next').addEventListener('click', function() {
             if (index < totalSlides - 1) {
                 index++;
                 updateCarousel();
@@ -49,7 +49,7 @@
             }
         });
 
-        document.getElementById('prev').addEventListener('click', function() {
+        document.getElementById('carousel-prev').addEventListener('click', function() {
             if (index > 0) {
                 index--;
                 updateCarousel();

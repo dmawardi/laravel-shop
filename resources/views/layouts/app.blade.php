@@ -41,7 +41,11 @@
             {{ $slot }}
         </main>
     </div>
-</body>
+    
+    {{-- Footer --}}
+    <x-layouts.footer :categories="$categories" />
 
-<script src="{{ mix('resources/js/animations.js') }}"></script>
+    <!-- Scripts -->
+    <script src="{{ mix('resources/js/animations.js') }}"></script>
+</body>
 </html>

@@ -25,7 +25,7 @@
     <div class="min-h-screen bg-gray-100">
         {{-- Navigation --}}
         <x-navigation />
-        <x-bottom-nav-bar/>
+        <x-layouts.bottom-nav-bar/>
 
         <!-- Page Heading -->
         @if (isset($header))

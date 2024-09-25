@@ -11,7 +11,7 @@
             <div class="product-carousel flex transition-transform duration-200 ease-in-out" data-carousel-id="{{ Str::slug($title) }}">
                 <!-- Product Card -->
                 @foreach($products as $product)
-                    <div class="w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 p-2">
+                    <div class="w-full sm:w-1/2 lg:w-1/5 flex-shrink-0 p-2">
                         <div class="bg-white rounded-lg shadow-md overflow-hidden h-full flex flex-col">
                             <a href="{{ route('products.show', [$product->slug]) }}">
                                 <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">

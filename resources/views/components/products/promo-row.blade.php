@@ -8,7 +8,7 @@
                  <!-- Loop to create promo panels -->
                 @for($i = 1; $i <= 3; $i++)
                     <div class="w-full md:w-1/3 flex-shrink-0 m-1">
-                        <a href="https://example.com/promo{{ $i }}" class="block rounded-lg overflow-hidden shadow-md">
+                        <a href="https://example.com/promo{{ $i }}" class="block rounded-sm overflow-hidden shadow-md">
                             <img src="https://via.placeholder.com/600x400?text=Promo+{{ $i }}" alt="Promo {{ $i }}" class="w-full h-auto object-cover">
                         </a>
                     </div>

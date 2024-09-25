@@ -3,11 +3,11 @@
         <!-- Carousel Container -->
         <div class="relative overflow-hidden">
             <!-- Slides -->
-            <div id="main-carousel" class="flex transition-transform duration-500 ease-in-out" style="width: max-content;">
+            <div id="main-carousel" class="flex transition-transform duration-500 ease-in-out">
                 <!-- Loop to create 3 slides -->
                 @for($i = 1; $i <= 3; $i++)
-                    <div class="w-full md:w-1/3 flex-shrink-0 p-4">
-                        <a href="/promotion-{{ $i }}" class="block rounded-lg overflow-hidden shadow-md">
+                    <div class="w-full sm:w-1/2 flex-shrink-0 p-4">
+                        <a href="/promotion-{{ $i }}" class="block rounded-sm overflow-hidden shadow-md">
                             <img src="https://via.placeholder.com/600x400?text=Promotion+{{ $i }}" alt="Promotion {{ $i }}" class="w-full h-auto object-cover">
                         </a>
                     </div>

@@ -1,60 +1,95 @@
-<!-- Carousel Container -->
-<div class="relative w-2/3 overflow-hidden mx-auto group">
-    <!-- Slides -->
-    <div id="carousel" class="flex transition-transform duration-500">
-        <!-- Loop to create 3 slides -->
-         @for($i = 1; $i <= 3; $i++)
-        <div class="w-full flex-shrink-0">
-            <a href="/promotion-{{ $i }}">
-                <img src="https://via.placeholder.com/800x400?text=Promotion+{{ $i }}" alt="Promotion {{ $i }}" class="w-full h-auto object-cover">
-            </a>
-        </div>
-        @endfor
-    </div>
+<div class="bg-gray-100 py-8">
+    <div class="container mx-auto px-4 group">
+        <!-- Carousel Container -->
+        <div class="relative overflow-hidden">
+            <!-- Slides -->
+            <div id="main-carousel" class="flex transition-transform duration-500 ease-in-out" style="width: max-content;">
+                <!-- Loop to create 3 slides -->
+                @for($i = 1; $i <= 3; $i++)
+                    <div class="w-full md:w-1/3 flex-shrink-0 p-4">
+                        <a href="/promotion-{{ $i }}" class="block rounded-lg overflow-hidden shadow-md">
+                            <img src="https://via.placeholder.com/600x400?text=Promotion+{{ $i }}" alt="Promotion {{ $i }}" class="w-full h-auto object-cover">
+                        </a>
+                    </div>
+                @endfor
+            </div>
 
-    <!-- Navigation Buttons -->
-    <button id="carousel-prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl opacity-0 group-hover:opacity-50 transition-opacity duration-400">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-        </svg>
-    </button>
-    <button id="carousel-next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 mx-4 rounded-full text-4xl opacity-0 group-hover:opacity-50 transition-opacity duration-400">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-    </button>
+            <!-- Navigation Buttons -->
+            <button id="main-carousel-prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-3 rounded-full shadow-md opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <button id="main-carousel-next" 
+            class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-3 rounded-full shadow-md opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+    </div>
 </div>
 
 <!-- JavaScript for Carousel Functionality -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.getElementById('carousel');
-        const slides = carousel.children;
-        const totalSlides = slides.length;
+    document.addEventListener('DOMContentLoaded', function () {
+        const carousel = document.getElementById('main-carousel');
+        const prevButton = document.getElementById('main-carousel-prev');
+        const nextButton = document.getElementById('main-carousel-next');
+        const items = carousel.children;
+        let itemWidth = items[0].offsetWidth;
+        let visibleItems = Math.floor(carousel.parentElement.offsetWidth / itemWidth);
         let index = 0;
 
-        document.getElementById('carousel-next').addEventListener('click', function() {
-            if (index < totalSlides - 1) {
-                index++;
-                updateCarousel();
-            } else {
-                index = 0;
+        // Update button visibility initially
+        updateButtonVisibility();
+
+        prevButton.addEventListener('click', function () {
+            if (index > 0) {
+                index--;
                 updateCarousel();
             }
         });
 
-        document.getElementById('carousel-prev').addEventListener('click', function() {
-            if (index > 0) {
-                index--;
-                updateCarousel();
-            } else {
-                index = totalSlides - 1;
+        nextButton.addEventListener('click', function () {
+            if (index < items.length - visibleItems) {
+                index++;
                 updateCarousel();
             }
         });
 
         function updateCarousel() {
-            carousel.style.transform = `translateX(-${index * 100}%)`;
+            console.log("Updating carousel");
+            carousel.style.transform = `translateX(-${index * itemWidth}px)`;
+            updateButtonVisibility();
         }
+
+        function updateButtonVisibility() {
+        // Hide prev button if at the first item
+        if (index === 0) {
+            prevButton.classList.add("hidden");
+            prevButton.disabled = true;
+        } else {
+            prevButton.classList.remove("hidden");
+            prevButton.disabled = false;
+        }
+
+        // Hide next button if last item is fully visible
+        if (index >= items.length - visibleItems) {
+            nextButton.classList.add("hidden");
+            nextButton.disabled = true;
+        } else {
+            nextButton.classList.remove("hidden");
+            nextButton.disabled = false;
+        }
+    }
+
+        // Recalculate the number of visible items and update the carousel on window resize
+        window.addEventListener('resize', function () {
+            // Recalculate item width and visible items
+            itemWidth = items[0].offsetWidth;
+            visibleItems = Math.floor(carousel.parentElement.offsetWidth / itemWidth);
+            updateCarousel();
+        });
     });
 </script>

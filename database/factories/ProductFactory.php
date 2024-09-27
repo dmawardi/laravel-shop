@@ -27,6 +27,8 @@ class ProductFactory extends Factory
             'quantity' => $this->faker->numberBetween(1, 100),
             'slug' => $slug,
             'price' => $this->faker->randomFloat(2, 1, 100),
+            // Select from a list of enums
+            'brand' => $this->faker->randomElement(['MAC', 'Anastasia', 'Urban Decay', 'NARS']),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->uuid(),
             'category_id' => Category::factory(),

@@ -35,12 +35,31 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Category $category, Request $request)
     {
-        // Fetch all products in the category and its children
-        $products = $category->allProducts();
+        // Get all products in the current category and its children
+        $productsQuery = $category->allProducts()->toQuery();
 
-        dd($products);
+        // Apply Price Filters if present
+        // if ($request->filled('min_price')) {
+        //     $productsQuery->where('price', '>=', $request->input('min_price'));
+        // }
+
+        // if ($request->filled('max_price')) {
+        //     $productsQuery->where('price', '<=', $request->input('max_price'));
+        // }
+
+        // Apply Brand Filters if present
+        if ($request->filled('brands')) {
+            $productsQuery->whereIn('brand_id', $request->input('brands'));
+        }
+
+        // Paginate the filtered products
+        $products = $productsQuery->paginate(12);
+
+        // Retrieve all brands for the filter section
+
+        dump($products);
         return view('category.show', [
             'category' => $category,
             'products' => $products

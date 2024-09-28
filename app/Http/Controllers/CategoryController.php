@@ -58,11 +58,13 @@ class CategoryController extends Controller
         $products = $productsQuery->paginate(12);
 
         // Retrieve all brands for the filter section
+        $uniqueBrands = Product::select('brand')->distinct()->pluck('brand');
 
-        dump($products);
+        // dd($category);
         return view('category.show', [
             'category' => $category,
-            'products' => $products
+            'products' => $products,
+            'brands' => $uniqueBrands,
         ]);
     }
 

@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `.next[data-carousel-id="${carouselId}"]`
         );
         const items = carousel.children;
-        let itemWidth = items[0].offsetWidth + 16; // Width of one item including margin
+        let itemWidth = items[0].offsetWidth; // Width of one item including margin
         let visibleItems = Math.floor(
             carousel.parentElement.offsetWidth / itemWidth
         );
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         nextButton.addEventListener("click", function () {
-            if (index < items.length - visibleItems - 1) {
+            if (index < items.length - visibleItems) {
                 // Allow one item before the last one
                 index++;
                 updateCarousel();
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // Hide next button if second-to-last set of items is visible
-            if (index >= items.length - visibleItems - 1) {
+            if (index >= items.length - visibleItems) {
                 // Updated condition to disable one card earlier
                 nextButton.classList.add("hidden");
                 nextButton.disabled = true;
@@ -131,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Recalculate the number of visible items and update the carousel on window resize
         window.addEventListener("resize", function () {
             // Recalculate item width and visible items
-            itemWidth = items[0].offsetWidth + 16;
+            itemWidth = items[0].offsetWidth;
             visibleItems = Math.floor(
                 carousel.parentElement.offsetWidth / itemWidth
             );

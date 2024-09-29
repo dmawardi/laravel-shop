@@ -1,5 +1,5 @@
 @props(['categories'])
-<div class="flex flex-wrap justify-center bg-white w-screen relative">
+<div class="flex flex-wrap justify-center bg-white w-screen relative mb-5">
     @foreach ($categories as $category)
         <div class="relative group">
             <!-- Button to toggle the dropdown -->

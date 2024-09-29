@@ -1,5 +1,5 @@
 @props(['category'])
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4">
     <!-- Breadcrumb -->
     <nav class="text-sm mb-4" aria-label="Breadcrumb">
         <ol class="list-reset flex text-gray-500">

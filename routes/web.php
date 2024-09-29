@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
@@ -48,7 +49,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Brands
-// Route::get('/brands/{brand}', [BrandController::class, 'show'])->name('brands.show');
+Route::get('/brand/{brand}', [BrandController::class, 'show'])->name('brand.show');
 // Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
 
 // Collections

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -35,6 +36,8 @@ class DatabaseSeeder extends Seeder
             'Tools & Brushes'
         ];
 
+        // Create 5 brands
+        Brand::factory(5)->create();
         
         foreach ($baseCategories as $category) {
             // Create a category
@@ -58,6 +61,7 @@ class DatabaseSeeder extends Seeder
                     // Create 2 products within the category
                     $products = Product::factory(2)->create([
                         'category_id' => $subsubCategory->id,
+                        'brand_id' => $this->determineBrandId(),
                     ]);
             
                     // Create 10 reviews for each product
@@ -75,23 +79,18 @@ class DatabaseSeeder extends Seeder
         // Order::factory()->withCompleteOrder()->create();
     }
 
-    // Function to determine if a category should have a parent
-    private function determineParentId()
+    // Function to determine which brand to assign to a product
+    private function determineBrandId()
     {
-        // Fetch all existing category IDs
-        $existingCategoryIds = DB::table('categories')->pluck('id')->all();
+        // Fetch all existing brand IDs
+        $existingCategoryIds = DB::table('brands')->pluck('id')->all();
 
-        // Check if there are existing categories to choose from
+        // Check if there are existing brands to choose from
         if (empty($existingCategoryIds)) {
-            return null; // No categories exist, so parent_id should be null
+            return null; // No existing brands
         }
 
-        // Randomly decide if there should be a parent (50% chance)
-        if (rand(0, 1) === 1) {
-            // Randomly select an existing category ID
-            return $existingCategoryIds[array_rand($existingCategoryIds)];
-        }
-
-        return null; // No parent, so return null
+        // Randomly decide which brand to assign
+        return $existingCategoryIds[array_rand($existingCategoryIds)];
     }
 }

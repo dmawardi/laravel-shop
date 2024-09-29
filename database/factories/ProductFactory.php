@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Subsubcategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -28,10 +28,24 @@ class ProductFactory extends Factory
             'slug' => $slug,
             'price' => $this->faker->randomFloat(2, 1, 100),
             // Select from a list of enums
-            'brand' => $this->faker->randomElement(['MAC', 'Anastasia', 'Urban Decay', 'NARS']),
+            'brand_id' => Brand::factory(),
             'image' => 'https://via.placeholder.com/150',
             'sku' => $this->faker->uuid(),
             'category_id' => Category::factory(),
         ];
+    }
+
+    public function forBrand(Brand $brand)
+    {
+        return $this->state([
+            'brand_id' => $brand->id,
+        ]);
+    }
+
+    public function forCategory(Category $category)
+    {
+        return $this->state([
+            'category_id' => $category->id,
+        ]);
     }
 }

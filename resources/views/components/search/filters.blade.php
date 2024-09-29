@@ -1,9 +1,9 @@
-@props(['brands'=>[], 'category'=>null, 'routeAction'=>''])
+@props(['brands'=>[], 'routeAction'=>''])
 <aside class="w-full md:w-1/4 mb-8 md:mb-0">
             <div class="p-4 bg-white rounded-lg shadow">
                 <h2 class="font-semibold text-lg mb-4">Filters</h2>
                 <!-- Example Filters -->
-                <form action="" method="GET">
+                <form action="{{$routeAction}}" method="GET">
                     <!-- Price Filter -->
                     <div class="mb-4">
                         <h3 class="font-semibold mb-2">Price</h3>

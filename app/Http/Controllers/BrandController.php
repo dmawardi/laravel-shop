@@ -16,9 +16,11 @@ class BrandController extends Controller
 
     public function show(Brand $brand)
     {
-        $brand->load('products');
+        $products = $brand->products()->paginate();
+        // dd($brand);
         return view('brand.show', [
             'brand' => $brand,
+            'products' => $products,
         ]);
     }
 }

@@ -18,13 +18,13 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 8, 2);
             $table->string('sku')->unique();
-            $table->string('brand');
             $table->integer('quantity');
             $table->string('image')->nullable();
             $table->timestamps();
 
             // Foreign keys
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
         });
     }
 

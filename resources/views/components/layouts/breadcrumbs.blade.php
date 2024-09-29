@@ -1,4 +1,4 @@
-@props(['category'])
+@props(['category', 'ancestors'])
 <div class="container mx-auto px-4">
     <!-- Breadcrumb -->
     <nav class="text-sm mb-4" aria-label="Breadcrumb">
@@ -8,7 +8,7 @@
             </li>
             @if($category->parent)
                 <!-- Loop through parent categories for full breadcrumb -->
-                @foreach($category->parent->ancestorsAndSelf as $ancestor)
+                @foreach($ancestors as $ancestor)
                     <li>
                         <span class="mx-2">/</span>
                         <a href="{{ route('categories.show', $ancestor->slug) }}" class="text-blue-500 hover:underline">

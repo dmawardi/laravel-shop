@@ -63,6 +63,23 @@ class Category extends Model
         return $ids;
     }
 
+     /**
+     * Get all ancestors of the category, including the category itself.
+     * For breadrumbs.
+     */
+    public function ancestors()
+    {
+        $ancestors = collect();
+        $parent = $this->parent;
+
+        while ($parent) {
+            $ancestors->prepend($parent); // Add parent to the beginning of the collection
+            $parent = $parent->parent;
+        }
+
+        return $ancestors;
+    }
+
     /**
      * Get the route key for the model.
      *

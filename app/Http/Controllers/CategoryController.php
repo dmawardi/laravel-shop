@@ -57,11 +57,12 @@ class CategoryController extends Controller
 
         // Paginate the filtered products
         $products = $productsQuery->paginate(12);
+        $ancestors = $category->ancestors();
 
-        // dd($category);
         return view('category.show', [
             'category' => $category,
             'products' => $products,
+            'ancestors' => $ancestors,
         ]);
     }
 

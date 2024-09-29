@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Collection;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
@@ -38,6 +39,9 @@ class DatabaseSeeder extends Seeder
 
         // Create 5 brands
         Brand::factory(5)->create();
+
+        // Create 5 collections
+        Collection::factory(5)->create();
         
         foreach ($baseCategories as $category) {
             // Create a category
@@ -63,6 +67,10 @@ class DatabaseSeeder extends Seeder
                         'category_id' => $subsubCategory->id,
                         'brand_id' => $this->determineBrandId(),
                     ]);
+
+                    // Attach a collection to each product
+                    $products[0]->collections()->attach($this->determineCollectionId());
+
             
                     // Create 10 reviews for each product
                     // foreach ($products as $product) {
@@ -92,5 +100,20 @@ class DatabaseSeeder extends Seeder
 
         // Randomly decide which brand to assign
         return $existingCategoryIds[array_rand($existingCategoryIds)];
+    }
+
+    // Function to determine which collection to assign to a product
+    private function determineCollectionId()
+    {
+        // Fetch all existing collection IDs
+        $existingCollectionIds = DB::table('collections')->pluck('id')->all();
+
+        // Check if there are existing collections to choose from
+        if (empty($existingCollectionIds)) {
+            return null; // No existing collections
+        }
+
+        // Randomly decide which collection to assign
+        return $existingCollectionIds[array_rand($existingCollectionIds)];
     }
 }

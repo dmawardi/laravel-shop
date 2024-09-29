@@ -1,3 +1,4 @@
+@props(['category'])
 <div class="container mx-auto px-4 py-8">
     <!-- Breadcrumb -->
     <nav class="text-sm mb-4" aria-label="Breadcrumb">

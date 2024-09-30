@@ -1,3 +1,50 @@
+// Navigation dropdown
+document.addEventListener("DOMContentLoaded", function () {
+    // Get all buttons and dropdowns
+    const categoryButtons = document.querySelectorAll(".bottom-nav-button");
+    const dropdowns = document.querySelectorAll(".dropdown-content");
+
+    categoryButtons.forEach((button) => {
+        const categoryId = button.getAttribute("data-nav-id");
+        // Get the dropdown for the current category
+        const dropdown = document.querySelector(
+            `.dropdown-content[data-category-id="${categoryId}"]`
+        );
+
+        // Show dropdown on hover over the button
+        button.addEventListener("mouseenter", () => {
+            hideAllDropdowns(); // Hide any open dropdowns
+            dropdown.classList.remove("hidden");
+        });
+
+        // Hide dropdown on mouse leave from the button
+        button.addEventListener("mouseleave", () => {
+            setTimeout(() => {
+                if (!dropdown.matches(":hover")) {
+                    dropdown.classList.add("hidden");
+                }
+            }, 100); // Delay to allow moving to dropdown
+        });
+
+        // Keep dropdown visible when hovering over it
+        dropdown.addEventListener("mouseenter", () => {
+            dropdown.classList.remove("hidden");
+        });
+
+        // Hide dropdown when mouse leaves the dropdown area
+        dropdown.addEventListener("mouseleave", () => {
+            dropdown.classList.add("hidden");
+        });
+    });
+
+    // Function to hide all dropdowns
+    function hideAllDropdowns() {
+        dropdowns.forEach((dropdown) => {
+            dropdown.classList.add("hidden");
+        });
+    }
+});
+
 // Main Carousel
 document.addEventListener("DOMContentLoaded", function () {
     const carousel = document.getElementById("main-carousel");

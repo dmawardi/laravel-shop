@@ -5,10 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const dropdowns = document.querySelectorAll(".dropdown-content");
 
     categoryButtons.forEach((button) => {
-        const categoryId = button.getAttribute("data-nav-id");
+        const dataID = button.getAttribute("data-nav-id");
         // Get the dropdown for the current category
         const dropdown = document.querySelector(
-            `.dropdown-content[data-category-id="${categoryId}"]`
+            `.dropdown-content[data-nav-id="${dataID}"]`
         );
 
         // Show dropdown on hover over the button

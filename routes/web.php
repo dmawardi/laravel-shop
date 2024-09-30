@@ -49,8 +49,8 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/{product:slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Brands
-Route::get('/brand/{brand}', [BrandController::class, 'show'])->name('brand.show');
-// Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
+Route::get('/brand/{brand}', [BrandController::class, 'show'])->name('brands.show');
+Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
 
 // Collections
 // Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');

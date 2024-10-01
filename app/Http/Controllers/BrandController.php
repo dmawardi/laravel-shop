@@ -9,8 +9,17 @@ class BrandController extends Controller
 {
     public function index()
     {
+         // Fetch all brands, order them by name
+         $brands = Brand::orderBy('name')->get();
+
+         // Group the brands by the first letter of their name
+         $groupedBrands = $brands->groupBy(function($brand) {
+             return strtoupper(substr($brand->name, 0, 1)); // Group by the first letter
+         });
+
         return view('brand.index', [
             'brands' => Brand::all(),
+            'groupedBrands' => $groupedBrands,
         ]);
     }
 

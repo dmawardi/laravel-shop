@@ -37,8 +37,12 @@ class DatabaseSeeder extends Seeder
             'Tools & Brushes'
         ];
 
-        // Create 5 brands
-        Brand::factory(5)->create();
+        foreach ($this->brands as $brand) {
+            Brand::factory()->create([
+                'name' => $brand,
+            ]);
+        }
+
 
         // Create 5 collections
         Collection::factory(5)->create();
@@ -116,4 +120,67 @@ class DatabaseSeeder extends Seeder
         // Randomly decide which collection to assign
         return $existingCollectionIds[array_rand($existingCollectionIds)];
     }
+
+    private $brands = [
+        'AAVRANI',
+        'ABBOTT',
+        'Act+Acre',
+        'adwoa beauty',
+        'AERIN',
+        'Algenist',
+        'ALO',
+        'Alpyn Beauty',
+        'ALTERNA Haircare',
+        'Ami Colé',
+        'amika',
+        'Anastasia Beverly Hills',
+        'Aquis',
+        'Ariana Grande',
+        'Armani Beauty',
+        'Artist Couture',
+        'Augustinus Bader',
+        'Azzaro',
+        'BaBylissPRO',
+        'bareMinerals',
+        'BASMA',
+        'BeautyBio',
+        'Beautyblender',
+        'belif',
+        'Benefit Cosmetics',
+        'Bio Ionic',
+        'Biossance',
+        'Blinc',
+        'Bobbi Brown',
+        'BondiBoost',
+        'Boy Smells',
+        'BREAD BEAUTY SUPPLY',
+        'Briogeo',
+        'BROWN GIRL Jane',
+        'Bumble and bumble',
+        'BURBERRY',
+        'Buxom',
+        'By Rosie Jane',
+        'caliray',
+        'CANOPY',
+        'Carolina Herrera',
+        'Caudalie',
+        'CAY SKIN',
+        'Ceremonia',
+        'CHANEL',
+        'Charlotte Tilbury',
+        'Chloé',
+        'Chunks',
+        'ciele',
+        'Cinema Secrets',
+        'Clarins',
+        'CLEAN RESERVE',
+        'CLINIQUE',
+        'COLOR WOW',
+        'Commodity',
+        'Community Sixty-Six',
+        'COOLA',
+        'Crown Affair',
+        'Curlsmith'
+    ];
+    
 }

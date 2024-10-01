@@ -23,11 +23,18 @@
 
                 <!-- Check if there are any brands under the current alphabet -->
                 @if (isset($groupedBrands[$alphabet]))
-                    <ul class="list-disc pl-5">
-                        @foreach ($groupedBrands[$alphabet] as $brand)
-                            <li>{{ $brand->name }}</li>
-                        @endforeach
-                    </ul>
+                    <!-- Apply CSS columns for vertical layout -->
+                    <div class="columns-1 sm:columns-2 lg:columns-4">
+                        <ul class="list-none">
+                            @foreach ($groupedBrands[$alphabet] as $brand)
+                                <li class="my-1">
+                                    <a href="{{ route('brands.show', $brand->slug) }}" class="hover:underline">
+                                        {{ $brand->name }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 @else
                     <p>No brands starting with {{ $alphabet }}.</p>
                 @endif

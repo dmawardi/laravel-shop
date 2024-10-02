@@ -8,7 +8,7 @@
             <div class="mb-4 flex flex-col">
                 <a href="{{ $routeAction }}" class="font-semibold">{{ $label }}</a>
                 @foreach($productCategories as $category)
-                    <a href="{{ $routeAction }}?category={{ $category->slug }}" class="hover:underline">{{ $category->name }}</label>
+                    <a href="{{ $routeAction }}?category={{ $category->slug }}" class="hover:underline">{{ $category->name }}</a>
                 @endforeach
             </div>
     </div>

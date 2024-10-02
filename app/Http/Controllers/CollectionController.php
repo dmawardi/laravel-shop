@@ -18,29 +18,24 @@ class CollectionController extends Controller
             // Grab the category ID from the request
             $categorySlug = $request->input('category');
             $category = Category::where('slug', $categorySlug)->first();
+
+            $ancestors = $category->getAllChildrenAndSelfIds();
                         
-            // Add the children categories to the array
-            foreach ($category->childrenRecursive as $childCategory) {
-                $categoryIds[] = $childCategory->id;
-            }
 
             // Filter the products by the category ID
-            $productsQuery->whereIn('category_id', $categoryIds);
+            $productsQuery->whereIn('category_id', $ancestors);
         }
 
+        // Get paginated results
         $products = $productsQuery->paginate(12);
-        // dump($products);
 
-        // Get all the categories of the products in the collection that don't have a parent
-        $collectionProductCategories = $collection->products->map(function ($product) {
-            return $product->category->parent;
-        });
+        $productCategoryParents = $collection->productCategoriesTopParent()->unique();
 
         return view('collection.show',
         [
             'collection' => $collection,
             'products' => $products,
-            'productCategories' => $collectionProductCategories->unique(),
+            'productCategories' => $productCategoryParents,
         ]
     );
     }

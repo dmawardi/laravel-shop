@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProductController;
@@ -53,7 +54,7 @@ Route::get('/brand/{brand}', [BrandController::class, 'show'])->name('brands.sho
 Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
 
 // Collections
-// Route::get('/collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
+Route::get('/collection/{collection}', [CollectionController::class, 'show'])->name('collections.show');
 
 
 require __DIR__.'/auth.php';

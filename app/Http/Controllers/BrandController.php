@@ -16,7 +16,6 @@ class BrandController extends Controller
          $groupedBrands = $brands->groupBy(function($brand) {
              return strtoupper(substr($brand->name, 0, 1)); // Group by the first letter
          });
-         dump($groupedBrands);
 
         return view('brand.index', [
             'brands' => Brand::all(),

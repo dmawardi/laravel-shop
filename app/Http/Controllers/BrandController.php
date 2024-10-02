@@ -29,10 +29,6 @@ class BrandController extends Controller
         $productsQuery = $brand->products->toQuery();
 
         // Apply Price Filters if present
-        // if ($request->filled('min_price')) {
-        //     $productsQuery->where('price', '>=', $request->input('min_price'));
-        // }
-
         // if ($request->filled('max_price')) {
         //     $productsQuery->where('price', '<=', $request->input('max_price'));
         // }

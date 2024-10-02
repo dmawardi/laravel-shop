@@ -1,8 +1,8 @@
 @props(['brands'=>[], 'routeAction'=>''])
 <aside class="w-full md:w-1/4 mb-8 md:mb-0">
             <div class="p-4 bg-white rounded-lg shadow">
+                
                 <h2 class="font-semibold text-lg mb-4">Filters</h2>
-                <!-- Example Filters -->
                 <form action="{{$routeAction}}" method="GET">
                     <!-- Price Filter -->
                     <div class="mb-4">

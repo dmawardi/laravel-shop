@@ -1,4 +1,8 @@
-<x-app-layout>
+<x-app-layout title="Explore Top Beauty Brands from A to Z | Mona" 
+description="Browse through Mona’s A to Z index of top beauty brands. Find your favorite makeup, skincare, and hair care brands in one place." 
+keywords="beauty brands A to Z, makeup brands, skincare brands, hair care brands, premium beauty, Mona, beauty store" 
+canonical="{{ route('brands.index') }}">
+
     <div class="mt-5 w-2/3 mx-auto">
         <h1 class="text-2xl font-bold">Brands A-Z</h1>
 

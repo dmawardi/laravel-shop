@@ -1,4 +1,7 @@
-<x-app-layout>
+<x-app-layout title="Track Your Orders | Mona" 
+description="Keep track of your beauty purchases at Mona. View your order history, shipping status, and manage your account easily." 
+keywords="my orders, track orders, Mona account, order history, beauty purchases, makeup orders, skincare orders, Mona" 
+canonical="{{ route('order.index') }}">
 
     <div class="container">
         <h1>My Orders</h1>

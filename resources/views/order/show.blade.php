@@ -1,4 +1,7 @@
-<x-app-layout>
+<x-app-layout title="View Your Order #{{ $order->id }} | Mona" 
+description="Review the details of your Order #{{ $order->id }} at Mona. Track your items, view shipping information, and manage your purchase history." 
+keywords="order {{ $orderNumber }}, view order details, track order, Mona order status, beauty purchases, makeup orders, skincare orders" 
+canonical="{{ route('order.show'), order->id }}">
     <div class="container mx-auto px-4 py-6">
         <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">

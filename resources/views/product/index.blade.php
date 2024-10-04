@@ -1,10 +1,13 @@
-<x-app-layout>
+<x-app-layout title="Shop Premium Beauty Products | Makeup, Skincare & Hair Care | Mona" 
+description="Discover a wide range of makeup, skincare, and hair care products at Mona. Shop the latest beauty trends and find products tailored to your needs." 
+keywords="beauty products, makeup, skincare, hair care, premium beauty, Mona, beauty store, buy beauty products online" 
+canonical="{{ route('products.index') }}">
     <div class="container mx-auto px-4 py-6">
         <h2 class="text-lg font-semibold">Products</h2>
         <div class="grid grid-cols-3 gap-4">
             @foreach ($products as $product)
                 <div class="border p-4">
-                    <a href="{{ route('product.show', $product->slug) }}">
+                    <a href="{{ route('products.show', $product->slug) }}">
                         <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 object-cover mb-2">
                         <h3 class="text-md font-semibold">{{ $product->name }}</h3>
                     </a>

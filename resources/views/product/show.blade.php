@@ -1,4 +1,7 @@
-<x-app-layout>
+<x-app-layout title=" {{ $product->name }} | {{ $product->brand->name }} | Buy Online at Mona" 
+description="Shop {{ $product->name }} from {{ $product->brand->name }} at Mona. Explore this premium {{ $product->category->name }} product, read reviews, and add it to your beauty routine today." 
+keywords="{{ $product->name }}, {{ $product->brand->name }} {{ $product->category->name }}, buy {{ $product->name }} online, premium beauty products, Mona, {{ $product->brand->name }} beauty, beauty store" 
+canonical="{{ route('products.show', $product->slug) }}">
     <div class="container mx-auto px-4 py-6">
         <div class="bg-white shadow-md rounded-lg p-6">
             <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-64 object-cover rounded-md">

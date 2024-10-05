@@ -32,9 +32,9 @@ class Product extends Model
         return $this->belongsToMany(Collection::class);
     }
 
-    public function additionalImages()
+    public function images()
     {
-        return [];
+        return $this->hasMany(ProductImage::class)->orderBy('sort');
     }
 
     public function getRouteKeyName()

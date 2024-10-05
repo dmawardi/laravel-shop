@@ -8,9 +8,9 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
             {{-- Left - Images --}}
             <div class="w-full lg:w-1/3">
                 <div class="bg-white p-4 shadow-lg rounded-md">
-                    <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-64 object-cover rounded-md">
+                    <img src="{{ $product->images[0]->src }}" alt="{{ $product->name }}" class="w-full h-64 object-cover rounded-md">
                     <div class="mt-4 flex space-x-2">
-                        @foreach ($product->additionalImages as $image)
+                        @foreach ($product->images as $image)
                             <img src="{{ $image }}" alt="Product image" class="w-16 h-16 object-cover rounded-md">
                         @endforeach
                     </div>
@@ -39,19 +39,20 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                     <p class="text-gray-700">{{ $product->description }}</p>
                 </div>
 
-                {{-- Highlights --}}
-                <div class="mt-6">
-                    <h3 class="font-semibold text-lg">Highlights</h3>
-                    <ul class="mt-2 space-y-2">
-                        <li><span class="font-semibold">Cruelty-Free</span></li>
-                        <li><span class="font-semibold">Vegan</span></li>
-                        <li><span class="font-semibold">Best for Normal Skin</span></li>
-                        <li><span class="font-semibold">Anti-Aging</span></li>
-                    </ul>
-                </div>
             </div>
         </div>
-
+        <div class="my-4 border-b-2 border-gray-300"></div>
+        {{-- Highlights --}}
+        <div class="mt-6">
+            <h3 class="font-semibold text-lg">Highlights</h3>
+            <ul class="mt-2 space-y-2">
+                <li><span class="font-semibold">Cruelty-Free</span></li>
+                <li><span class="font-semibold">Vegan</span></li>
+                <li><span class="font-semibold">Best for Normal Skin</span></li>
+                <li><span class="font-semibold">Anti-Aging</span></li>
+            </ul>
+        </div>
+        
         {{-- Ingredients Section --}}
         <div class="mt-8">
             <h3 class="text-xl font-semibold">Ingredients</h3>

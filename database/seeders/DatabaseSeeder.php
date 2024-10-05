@@ -9,11 +9,13 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\Review;
 use App\Models\ShippingInformation;
 use App\Models\Subcategory;
 use App\Models\Subsubcategory;
 use App\Models\User;
+use Database\Factories\ProductImageFactory;
 use Faker\Factory as FakerFactory; // Add this import statement
 
 use Illuminate\Database\Seeder;
@@ -71,6 +73,11 @@ class DatabaseSeeder extends Seeder
                         'category_id' => $subsubCategory->id,
                         'brand_id' => $this->determineBrandId(),
                     ]);
+
+                    // Add 2 images to each product
+                    foreach ($products as $product) {
+                        ProductImage::factory(2)->forProduct($product)->create();
+                    }
 
                     // Attach a collection to each product
                     $products[0]->collections()->attach($this->determineCollectionId());

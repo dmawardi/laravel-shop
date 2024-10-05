@@ -8,7 +8,7 @@ canonical="{{ route('products.index') }}">
             @foreach ($products as $product)
                 <div class="border p-4">
                     <a href="{{ route('products.show', $product->slug) }}">
-                        <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-32 object-cover mb-2">
+                        <img src="{{ $product->images[0]->src }}" alt="{{ $product->name }}" class="w-full h-32 object-cover mb-2">
                         <h3 class="text-md font-semibold">{{ $product->name }}</h3>
                     </a>
                     <p>${{ $product->price }}</p>
@@ -17,7 +17,7 @@ canonical="{{ route('products.index') }}">
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <input type="hidden" name="name" value="{{ $product->name }}">
                         <input type="hidden" name="price" value="{{ $product->price }}">
-                        <input type="hidden" name="image" value="{{ $product->image }}">
+                        <input type="hidden" name="image" value="{{ $product->images[0]->src }}">
                         <button type="submit"
                             class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-2">Add to Cart</button>
                     </form>

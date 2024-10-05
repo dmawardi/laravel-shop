@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->string('sku')->unique();
             $table->integer('quantity');
-            $table->string('image')->nullable();
             $table->timestamps();
 
             // Foreign keys

@@ -50,7 +50,7 @@ class ProductListLayout extends Table
                 }),
             TD::make('image_url', 'Image')
                 ->render(function (Product $product) {
-                    return "<img src='{$product->image_url}' width='100' />";
+                    return "<img src='{$product->images[0]->src}' width='100' />";
                 }),
             TD::make('created_at', 'Created'),
             TD::make('updated_at', 'Last edit'),

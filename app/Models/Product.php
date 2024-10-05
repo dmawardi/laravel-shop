@@ -32,6 +32,11 @@ class Product extends Model
         return $this->belongsToMany(Collection::class);
     }
 
+    public function additionalImages()
+    {
+        return [];
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

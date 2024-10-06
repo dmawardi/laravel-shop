@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories', Category::with(['children' => function ($query) {
                 $query->with('children');
             }])->whereNull('parent_id')->get());
-            $view->with('brands', Brand::all());
+            $view->with('brands', Brand::where('is_featured', true)->get());
         });
     }
 }

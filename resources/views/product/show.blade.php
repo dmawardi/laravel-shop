@@ -2,7 +2,7 @@
 description="Shop {{ $product->name }} at Mona. Explore this premium beauty product, read reviews, and more." 
 canonical="{{ route('products.show', ['product' => $product->slug]) }}">
 
-    <div class="container mx-auto px-4 py-6">
+    <div class="container w-2/3 mx-auto px-4 py-6">
         {{-- Main Product Section --}}
         <div class="flex flex-wrap">
             {{-- Left - Images --}}
@@ -22,25 +22,54 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                 <h2 class="text-2xl font-bold">{{ $product->name }}</h2>
                 <p class="text-lg text-gray-600 mt-2">{{ $product->brand->name }}</p>
 
-                {{-- Price and Purchase Options --}}
-                <div class="flex items-center mt-4">
+                {{-- Price, Variant, and Purchase Options --}}
+                <div class="flex flex-col mt-4">
+                    {{-- Price --}}
                     <span class="text-xl font-semibold">${{ $product->price }}</span>
-                    <form action="{{ route('cart.store') }}" method="POST" class="ml-4">
+
+                    {{-- Form for adding to cart --}}
+                    <form action="{{ route('cart.store') }}" method="POST" class="mt-4">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                            Add to Cart
-                        </button>
+
+                        {{-- Variant Options (e.g., Size, Color) --}}
+                        <div class="mt-4">
+                            <label for="variant" class="block text-sm font-medium text-gray-700">Choose a variant:</label>
+                            <select id="variant" name="variant_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                @foreach ($product->images as $variant)
+                                    <option value="{{ $variant->id }}">{{ $variant->name }} ({{ $variant->additional_price ? '+$' . $variant->additional_price : 'No additional cost' }})</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        {{-- Shipping Options --}}
+                        <div class="mt-4">
+                            <label for="shipping" class="block text-sm font-medium text-gray-700">Choose shipping option:</label>
+                            <select id="shipping" name="shipping_method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="standard">Standard Shipping (Free)</option>
+                                <option value="express">Express Shipping (+$5.00)</option>
+                                <option value="overnight">Overnight Shipping (+$15.00)</option>
+                            </select>
+                        </div>
+
+                        
+                        {{-- Add to Cart Button --}}
+                        <div class="mt-6 flex items-center justify-end space-x-4">
+                            {{-- Quantity Selector --}}
+                                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity:</label>
+                                <input type="number" id="quantity" name="quantity" value="1" min="1" class="mt-1 block w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0 mx-2 bg-black text-white p-2">
+                                Add to Cart
+                            </button>
+                        </div>
                     </form>
                 </div>
 
-                {{-- Product Info --}}
-                <div class="mt-6">
-                    <p class="text-gray-700">{{ $product->description }}</p>
-                </div>
+               
 
             </div>
         </div>
+        <!-- Separator -->
         <div class="my-4 border-b-2 border-gray-300"></div>
         {{-- Highlights --}}
         <div class="mt-6">
@@ -53,23 +82,43 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
             </ul>
         </div>
         
+        {{-- Product Info --}}
+        <!-- Separator -->
+        <div class="my-4 border-b-2 border-gray-300"></div>
+        <div class="mt-6">
+            <h3 class="text-xl font-semibold">About the Product</h3>
+            <p class="text-gray-700">{{ $product->description }}</p>
+        </div>
+
         {{-- Ingredients Section --}}
+        <!-- Separator -->
+        <div class="my-4 border-b-2 border-gray-300"></div>
         <div class="mt-8">
-            <h3 class="text-xl font-semibold">Ingredients</h3>
-            <div class="bg-white p-4 shadow-md rounded-md mt-4">
+            <div class="flex cursor-pointer" id="ingredients-toggle">
+                <h3 class="text-xl font-semibold">Ingredients</h3>
+                <span id="ingredients-arrow" class="transform transition-transform duration-300 ml-3">&#9660;</span> <!-- Down Arrow -->
+            </div>
+            <div id="ingredients-content" class="mt-2 hidden">
                 <p class="text-gray-700">{{ $product->ingredients }}</p>
             </div>
         </div>
 
         {{-- How to Use Section --}}
+        <!-- Separator -->
+        <div class="my-4 border-b-2 border-gray-300"></div>
         <div class="mt-8">
-            <h3 class="text-xl font-semibold">How to Use</h3>
-            <div class="bg-white p-4 shadow-md rounded-md mt-4">
+            <div class="flex cursor-pointer" id="how-to-use-toggle">
+                <h3 class="text-xl font-semibold">How to Use</h3>
+                <span id="how-to-use-arrow" class="transform transition-transform duration-300 ml-3">&#9660;</span> <!-- Down Arrow -->
+            </div>
+            <div id="how-to-use-content" class="mt-2 hidden">
                 <p class="text-gray-700">{{ $product->how_to_use }}</p>
             </div>
         </div>
 
         {{-- Reviews Section --}}
+        <!-- Separator -->
+        <div class="my-4 border-b-2 border-gray-300"></div>
         <div class="mt-8">
             <h3 class="text-xl font-semibold">Customer Reviews</h3>
             @foreach ($product->reviews as $review)

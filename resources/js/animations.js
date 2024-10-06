@@ -253,3 +253,26 @@ document.addEventListener("DOMContentLoaded", function () {
         updateCarousel(); // Adjust carousel position based on new visible items
     });
 });
+
+// Product information dropdowns
+document.addEventListener("DOMContentLoaded", function () {
+    // Toggle for Ingredients Section
+    const ingredientsToggle = document.getElementById("ingredients-toggle");
+    const ingredientsContent = document.getElementById("ingredients-content");
+    const ingredientsArrow = document.getElementById("ingredients-arrow");
+
+    ingredientsToggle.addEventListener("click", function () {
+        ingredientsContent.classList.toggle("hidden");
+        ingredientsArrow.classList.toggle("rotate-180"); // Rotate arrow for animation
+    });
+
+    // Toggle for How to Use Section
+    const howToUseToggle = document.getElementById("how-to-use-toggle");
+    const howToUseContent = document.getElementById("how-to-use-content");
+    const howToUseArrow = document.getElementById("how-to-use-arrow");
+
+    howToUseToggle.addEventListener("click", function () {
+        howToUseContent.classList.toggle("hidden");
+        howToUseArrow.classList.toggle("rotate-180"); // Rotate arrow for animation
+    });
+});

@@ -112,7 +112,7 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                 <span id="how-to-use-arrow" class="transform transition-transform duration-300 ml-3">&#9660;</span> <!-- Down Arrow -->
             </div>
             <div id="how-to-use-content" class="mt-2 hidden">
-                <p class="text-gray-700">{{ $product->how_to_use }}</p>
+                <p class="text-gray-700">{{ $product->directions }}</p>
             </div>
         </div>
 

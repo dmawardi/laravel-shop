@@ -3,7 +3,7 @@ description="Keep track of your beauty purchases at Mona. View your order histor
 keywords="my orders, track orders, Mona account, order history, beauty purchases, makeup orders, skincare orders, Mona" 
 canonical="{{ route('order.index') }}">
 
-    <div class="container">
+    <div class="container w-2/3 mx-auto">
         <h1>My Orders</h1>
 
         @if ($orders->isEmpty())

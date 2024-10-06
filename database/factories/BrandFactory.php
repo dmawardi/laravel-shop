@@ -21,6 +21,65 @@ class BrandFactory extends Factory
             'slug' => $this->faker->unique()->slug,
             'description' => $this->faker->sentence,
             'image' => $this->faker->imageUrl(),
+            'is_active' => true,
+            'is_featured' => $this->faker->boolean,
         ];
+    }
+
+    /**
+     * Indicate that the brand is active.
+     *
+     * @return \Database\Factories\BrandFactory
+     */
+    public function active(): BrandFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_active' => true,
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the brand is inactive.
+     *
+     * @return \Database\Factories\BrandFactory
+     */
+    public function inactive(): BrandFactory
+
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_active' => false,
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the brand is featured.
+     *
+     * @return \Database\Factories\BrandFactory
+     */
+    public function featured(): BrandFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_featured' => true,
+            ];
+        });
+    }
+    
+    /**
+     * Indicate that the brand is not featured.
+     *
+     * @return \Database\Factories\BrandFactory
+     */
+    public function notFeatured(): BrandFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_featured' => false,
+            ];
+        });
     }
 }

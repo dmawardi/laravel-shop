@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('sku')->unique();
+            $table->string('group')->nullable();
             $table->string('name');
             $table->integer('price');
             $table->integer('discount')->nullable();

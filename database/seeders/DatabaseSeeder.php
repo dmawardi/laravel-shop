@@ -10,6 +10,7 @@ use App\Models\OrderItem;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductVariant;
 use App\Models\Review;
 use App\Models\ShippingInformation;
 use App\Models\Subcategory;
@@ -81,6 +82,8 @@ class DatabaseSeeder extends Seeder
                     foreach ($products as $product) {
                         // Add 2 images to each product
                         ProductImage::factory(2)->forProduct($product)->create();
+                        // Add 3 variants to each product
+                        ProductVariant::factory(3)->forProduct($product)->create();
                         // Add 6 tags to each product
                         for ($k = 0; $k < 6; $k++) {
                             $product->tags()->attach($this->determineTagId());

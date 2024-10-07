@@ -24,6 +24,9 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('shipped_at')->nullable();
             $table->timestamps();
+
+            // Foreign keys
+            $table->foreignId('shipping_method_id')->nullable()->constrained();
         });
     }
 

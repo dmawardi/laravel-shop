@@ -24,7 +24,7 @@ class CategoryFactory extends Factory
     {
         $this->faker->unique(true); // Resets the unique checks
 
-        $slug = Str::slug($this->faker->unique()->slug(3));
+        $slug = Str::slug($this->faker->unique()->slug(4));
         return [
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),

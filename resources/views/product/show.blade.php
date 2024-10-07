@@ -46,11 +46,8 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                         <div class="mt-4">
                             <label for="shipping" class="block text-sm font-medium text-gray-700">Choose shipping option:</label>
                             <select id="shipping" name="shipping_method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="standard">Standard Shipping (Free)</option>
-                                <option value="express">Express Shipping (+$5.00)</option>
-                                <option value="overnight">Overnight Shipping (+$15.00)</option>
                                 @foreach($shippingMethods as $method)
-                                    <option value="{{ $method->id }}">{{ $method->name }} (+${{ $method->price }})</option>
+                                    <option value="{{ $method->id }}">{{ $method->name }} (+${{ $method->base_price }})</option>
                                 @endforeach
                             </select>
                         </div>

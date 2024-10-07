@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ShippingMethod;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -36,7 +37,8 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('product.show', ['product' => $product]);
+        $shippingMethods = ShippingMethod::all();
+        return view('product.show', ['product' => $product, 'shippingMethods' => $shippingMethods]);
     }
 
 

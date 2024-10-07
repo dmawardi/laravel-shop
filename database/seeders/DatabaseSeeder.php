@@ -13,6 +13,7 @@ use App\Models\ProductImage;
 use App\Models\ProductVariant;
 use App\Models\Review;
 use App\Models\ShippingInformation;
+use App\Models\ShippingMethod;
 use App\Models\Subcategory;
 use App\Models\Subsubcategory;
 use App\Models\Tag;
@@ -43,6 +44,9 @@ class DatabaseSeeder extends Seeder
 
         // Create 10 tags
         Tag::factory(10)->create();
+
+        // Create 5 shipping methods
+        ShippingMethod::factory(5)->create();
 
         foreach ($this->brands as $brand) {
             Brand::factory()->create([

@@ -16,11 +16,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->string('delivery_time'); // e.g. 1-2 days
-            $table->decimal('base_price', 10, 2);
-            $table->decimal('price_per_kg', 10, 2);
-            $table->decimal('price_per_item', 10, 2);
-            $table->decimal('price_per_m', 10, 2);
-            $table->decimal('price_per_cm', 10, 2);
+            $table->decimal('base_price', 10, 2)->nullable();
+            $table->decimal('price_per_kg', 10, 2)->nullable();
+            $table->decimal('price_per_item', 10, 2)->nullable();
+            $table->decimal('price_per_m', 10, 2)->nullable();
+            $table->decimal('price_per_cm', 10, 2)->nullable();
         });
     }
 

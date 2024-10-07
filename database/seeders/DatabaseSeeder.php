@@ -81,9 +81,10 @@ class DatabaseSeeder extends Seeder
                     foreach ($products as $product) {
                         // Add 2 images to each product
                         ProductImage::factory(2)->forProduct($product)->create();
-                        // Add 2 tags to each product
-                        $product->tags()->attach($this->determineTagId());
-                        $product->tags()->attach($this->determineTagId());
+                        // Add 6 tags to each product
+                        for ($k = 0; $k < 6; $k++) {
+                            $product->tags()->attach($this->determineTagId());
+                        }
 
                         // Add reviews to each product
                         Review::factory(3)->create([

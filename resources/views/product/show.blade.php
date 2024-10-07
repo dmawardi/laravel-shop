@@ -75,10 +75,9 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
         <div class="mt-6">
             <h3 class="font-semibold text-lg">Highlights</h3>
             <ul class="mt-2 space-y-2">
-                <li><span class="font-semibold">Cruelty-Free</span></li>
-                <li><span class="font-semibold">Vegan</span></li>
-                <li><span class="font-semibold">Best for Normal Skin</span></li>
-                <li><span class="font-semibold">Anti-Aging</span></li>
+                @foreach ($product->tags as $tag)
+                    <li><span class="font-semibold">{{ $tag->name }}</span></li>
+                @endforeach
             </ul>
         </div>
         
@@ -133,8 +132,6 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                     <p class="mt-2 text-gray-600">{{ $review->comment }}</p>
                 </div>
             @endforeach
-
-          
         </div>
     </div>
 </x-app-layout>

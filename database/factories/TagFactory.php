@@ -17,7 +17,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(3),
+            'name' => $this->faker->word().$this->faker->word(),
             'slug' => $this->faker->unique()->slug(3),
         ];
     }

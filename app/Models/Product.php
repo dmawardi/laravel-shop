@@ -42,6 +42,11 @@ class Product extends Model
         return $this->belongsToMany(Tag::class);
     }
 
+    public function variants()
+    {
+        return $this->hasMany(ProductVariant::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

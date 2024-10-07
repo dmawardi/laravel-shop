@@ -49,6 +49,9 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                                 <option value="standard">Standard Shipping (Free)</option>
                                 <option value="express">Express Shipping (+$5.00)</option>
                                 <option value="overnight">Overnight Shipping (+$15.00)</option>
+                                @foreach($shippingMethods as $method)
+                                    <option value="{{ $method->id }}">{{ $method->name }} (+${{ $method->price }})</option>
+                                @endforeach
                             </select>
                         </div>
 

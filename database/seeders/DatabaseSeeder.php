@@ -14,6 +14,7 @@ use App\Models\Review;
 use App\Models\ShippingInformation;
 use App\Models\Subcategory;
 use App\Models\Subsubcategory;
+use App\Models\Tag;
 use App\Models\User;
 use Database\Factories\ProductImageFactory;
 use Faker\Factory as FakerFactory; // Add this import statement
@@ -38,6 +39,9 @@ class DatabaseSeeder extends Seeder
             'Bath & Body',
             'Tools & Brushes'
         ];
+
+        // Create 10 tags
+        Tag::factory(10)->create();
 
         foreach ($this->brands as $brand) {
             Brand::factory()->create([
@@ -74,21 +78,21 @@ class DatabaseSeeder extends Seeder
                         'brand_id' => $this->determineBrandId(),
                     ]);
 
-                    // Add 2 images to each product
                     foreach ($products as $product) {
+                        // Add 2 images to each product
                         ProductImage::factory(2)->forProduct($product)->create();
+                        // Add 2 tags to each product
+                        $product->tags()->attach($this->determineTagId());
+                        $product->tags()->attach($this->determineTagId());
+
+                        // Add reviews to each product
+                        Review::factory(3)->create([
+                            'product_id' => $product->id,
+                        ]);
                     }
 
                     // Attach a collection to each product
                     $products[0]->collections()->attach($this->determineCollectionId());
-
-            
-                    // Create 10 reviews for each product
-                    // foreach ($products as $product) {
-                    //     Review::factory(3)->create([
-                    //         'product_id' => $product->id,
-                    //     ]);
-                    // }
                 }
             }
 
@@ -126,6 +130,20 @@ class DatabaseSeeder extends Seeder
 
         // Randomly decide which collection to assign
         return $existingCollectionIds[array_rand($existingCollectionIds)];
+    }
+
+    private function determineTagId()
+    {
+        // Fetch all existing tag IDs
+        $existingTagIds = DB::table('tags')->pluck('id')->all();
+
+        // Check if there are existing tags to choose from
+        if (empty($existingTagIds)) {
+            return null; // No existing tags
+        }
+
+        // Randomly decide which tag to assign
+        return $existingTagIds[array_rand($existingTagIds)];
     }
 
     private $brands = [

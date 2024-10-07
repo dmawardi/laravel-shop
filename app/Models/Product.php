@@ -37,6 +37,11 @@ class Product extends Model
         return $this->hasMany(ProductImage::class)->orderBy('sort');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

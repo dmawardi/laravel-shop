@@ -134,32 +134,7 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                 </div>
             @endforeach
 
-            @auth
-                <div class="mt-6">
-                    <h3 class="font-semibold text-lg">Leave a Review</h3>
-                    <form action="{{ route('review.store', $product->slug) }}" method="POST" class="mt-4">
-                        @csrf
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
-                        <div>
-                            <x-input-label for="rating" value="Rating" />
-                            <select name="rating" id="rating" class="block mt-1 w-full">
-                                <option value="5">★★★★★</option>
-                                <option value="4">★★★★☆</option>
-                                <option value="3">★★★☆☆</option>
-                                <option value="2">★★☆☆☆</option>
-                                <option value="1">★☆☆☆☆</option>
-                            </select>
-                        </div>
-                        <div class="mt-4">
-                            <x-input-label for="comment" value="Comment" />
-                            <textarea name="comment" id="comment" rows="4" class="block mt-1 w-full"></textarea>
-                        </div>
-                        <div class="mt-4">
-                            <x-primary-button>Submit</x-primary-button>
-                        </div>
-                    </form>
-                </div>
-            @endauth
+          
         </div>
     </div>
 </x-app-layout>

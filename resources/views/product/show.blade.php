@@ -36,8 +36,8 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                         <div class="mt-4">
                             <label for="variant" class="block text-sm font-medium text-gray-700">Choose a variant:</label>
                             <select id="variant" name="variant_id" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                @foreach ($product->images as $variant)
-                                    <option value="{{ $variant->id }}">{{ $variant->name }} ({{ $variant->additional_price ? '+$' . $variant->additional_price : 'No additional cost' }})</option>
+                                @foreach ($product->variants as $variant)
+                                    <option value="{{ $variant->id }}">{{ $variant->name }} ({{ $variant->price ? '+$' . $variant->price : 'No additional cost' }})</option>
                                 @endforeach
                             </select>
                         </div>

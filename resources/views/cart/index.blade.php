@@ -9,7 +9,7 @@
                             <th scope="col" class="py-3 px-6">Item</th>
                             <th scope="col" class="py-3 px-6">Price</th>
                             <th scope="col" class="py-3 px-6">Quantity</th>
-                            <th scope="col" class="py-3 px-6 text-end">Total</th>
+                            <th scope="col" class="py-3 px-6 text-end">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>

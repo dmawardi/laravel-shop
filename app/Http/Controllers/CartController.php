@@ -37,30 +37,37 @@ class CartController extends Controller
             $price += $variant->additional_price; // Add variant price to base price
         }
 
+        // Calculate the quantity (default to 1 if not provided)
+        $quantity = $request->quantity ?? 1;
 
-        dd($variant);
-
-        // Get the cart session
+        // Calculate the subtotal for this item
+        $itemSubtotal = $price * $quantity;
+        
+        // Get the cart from session (initialize if empty)
         $cart = session()->get('cart', []);
-        // Calculate the item subtotal
-        $itemSubtotal = $request->price * ($request->quantity ?? 1); // Default quantity is 1 if not specified
 
+        // Create a unique cart item identifier based on product ID and variant (if exists)
+        $cartItemKey = $variant ? $product->id . '-' . $variant->id : $product->id;
+ 
         // Check if the item is already in the cart
-        if (isset($cart[$request->id])) {
-            // Update the quantity and subtotal
-            $cart[$request->id]['quantity'] += ($request->quantity ?? 1);
-            $cart[$request->id]['subtotal'] = $cart[$request->id]['quantity'] * $request->price;
+        if (isset($cart[$cartItemKey])) {
+            // If the product already exists in the cart, update the quantity and subtotal
+            $cart[$cartItemKey]['quantity'] += $quantity;
+            $cart[$cartItemKey]['subtotal'] = $cart[$cartItemKey]['quantity'] * $price;
         } else {
-            // Add the item to the cart
-            $cart[$request->id] = [
-                "id" => $request->id,
-                "name" => $request->name,
-                "quantity" => $request->quantity ?? 1,
-                "price" => $request->price,
-                "image" => $request->image,
-                "subtotal" => $itemSubtotal
+            // Add the new product to the cart
+            $cart[$cartItemKey] = [
+                'product_id' => $product->id,
+                'variant_id' => $variant ? $variant->id : null,  // Store variant if available
+                'name' => $product->name,
+                'variant_name' => $variant ? $variant->variant_value : null, // Optional variant name (e.g., "Red Matte")
+                'quantity' => $quantity,
+                'price' => $price, // Price per unit (with variant if applicable)
+                'image' => $product->image,  // Assuming the product has an image
+                'subtotal' => $itemSubtotal, // Total price for this item
             ];
         }
+
         // Update the cart session
         session()->put('cart', $cart);
 

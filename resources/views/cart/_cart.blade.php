@@ -21,9 +21,6 @@
     <div class="mt-4 text-lg font-semibold text-right">
         Total: ${{ number_format($overallTotal, 2) }}
     </div>
-    <a href="{{ route('cart.checkout') }}"
-        class="mt-4 inline-block text-white bg-green-500 hover:bg-green-600 font-medium rounded-lg text-sm px-6 py-2.5">Proceed
-        to Checkout</a>
 @else
     <p class="mt-6 text-gray-700">Your cart is empty.</p>
 @endif

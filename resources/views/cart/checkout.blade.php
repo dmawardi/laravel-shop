@@ -4,7 +4,7 @@
         @if (session('cart') && count(session('cart')) > 0)
             <form action="{{ route('order.store') }}" method="POST" class="flex">
                 @csrf
-                <div class="basis-1/2">
+                <div class="basis-1/2 px-4">
                     @include('cart._cart')
                 </div>
                 <div class="basis-1/2">

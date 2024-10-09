@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sku')->unique();
             $table->string('group')->nullable();
             $table->string('name');
-            $table->integer('price');
+            $table->integer('additional_price');
             $table->integer('discount')->nullable();
             $table->integer('stock');
             $table->string('image');

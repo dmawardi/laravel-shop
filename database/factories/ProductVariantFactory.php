@@ -20,7 +20,7 @@ class ProductVariantFactory extends Factory
         return [
             'sku' => $this->faker->unique()->bothify('??-########'),
             'name' => $this->faker->word,
-            'price' => $this->faker->numberBetween(100, 1000),
+            'additional_price' => $this->faker->numberBetween(100, 1000),
             'discount' => $this->faker->numberBetween(0, 100),
             'stock' => $this->faker->numberBetween(0, 100),
             'image' => $this->faker->imageUrl(),

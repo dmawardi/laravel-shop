@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Orchid\Support\Facades\Alert;
@@ -12,13 +14,10 @@ class CartController extends Controller
     {
         // Validate the request
         $validator = Validator::make($request->all(), [
-            'id' => 'required|integer',
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'image' => 'nullable|string',
-            'quantity' => 'nullable|integer'
+            'product_id' => 'required|integer|exists:products,id',
+            'variant_id' => 'nullable|integer|exists:product_variants,id', // Optional variant ID
+            'quantity' => 'nullable|integer|min:1',                // Default is 1 if not specified
         ]);
-      
 
         // Check if the validation fails
         if ($validator->fails()) {
@@ -26,6 +25,21 @@ class CartController extends Controller
                              ->withErrors($validator)
                              ->with('fail', 'Failed to add product to cart!');
         }
+
+        // Retrieve the product
+        $product = Product::find($request->product_id);
+
+        // Check if a variant is provided, else use the product's base price
+        $price = $product->price;
+        $variant = null;
+        if ($request->variant_id) {
+            $variant = ProductVariant::find($request->variant_id);
+            $price += $variant->additional_price; // Add variant price to base price
+        }
+
+
+        dd($variant);
+
         // Get the cart session
         $cart = session()->get('cart', []);
         // Calculate the item subtotal

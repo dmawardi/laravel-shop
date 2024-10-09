@@ -41,23 +41,16 @@ canonical="{{ route('products.show', ['product' => $product->slug]) }}">
                                 @endforeach
                             </select>
                         </div>
-
-                        {{-- Shipping Options --}}
-                        <div class="mt-4">
-                            <label for="shipping" class="block text-sm font-medium text-gray-700">Choose shipping option:</label>
-                            <select id="shipping" name="shipping_method" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                @foreach($shippingMethods as $method)
-                                    <option value="{{ $method->id }}">{{ $method->name }} (+${{ $method->base_price }})</option>
-                                @endforeach
-                            </select>
-                        </div>
-
                         
                         {{-- Add to Cart Button --}}
                         <div class="mt-6 flex items-center justify-end space-x-4">
                             {{-- Quantity Selector --}}
-                                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity:</label>
-                                <input type="number" id="quantity" name="quantity" value="1" min="1" class="mt-1 block w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity:</label>
+                            <select id="quantity" name="quantity" class="mt-1 block w-20 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" required>
+                                @for ($i = 1; $i <= 10; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
                             <button type="submit" class="btn btn-outline-success my-2 my-sm-0 mx-2 bg-black text-white p-2">
                                 Add to Cart
                             </button>

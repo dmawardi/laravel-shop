@@ -1,22 +1,27 @@
 @if (session('cart') && count(session('cart')) > 0)
     <div class="overflow-x-auto mt-6">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="py-3 px-6">Item</th>
-                    <th scope="col" class="py-3 px-6">Price</th>
-                    <th scope="col" class="py-3 px-6">Quantity</th>
-                    <th scope="col" class="py-3 px-6 text-end">Subtotal</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <div class="text-xs text-gray-700 uppercase bg-gray-50 flex justify-between border-black border-solid">
+                <div class="py-4 px-6">
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600"> 
+                    <span class="mx-2">
+                        Select All
+                    </span>
+                </div>
+                <div class="flex align-middle m-4">
+                    <a href="#">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            <div>
                 @php $overallTotal = 0; @endphp
                 @foreach (session('cart') as $id => $details)
                     @php $overallTotal += $details['subtotal']; @endphp
-                    <x-cart.item :id="$id" :details="$details" />
+                        <x-cart.item :id="$id" :details="$details" />
                 @endforeach
-            </tbody>
-        </table>
+            </div>
+        </div>
     </div>
     <div class="mt-4 text-lg font-semibold text-right">
         Total: ${{ number_format($overallTotal, 2) }}

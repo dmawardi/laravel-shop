@@ -63,7 +63,7 @@ class CartController extends Controller
                 'variant_name' => $variant ? $variant->variant_value : null, // Optional variant name (e.g., "Red Matte")
                 'quantity' => $quantity,
                 'price' => $price, // Price per unit (with variant if applicable)
-                'image' => $product->image,  // Assuming the product has an image
+                'image' => $product->images[0]->src,  // Assuming the product has an image
                 'subtotal' => $itemSubtotal, // Total price for this item
             ];
         }
@@ -76,23 +76,40 @@ class CartController extends Controller
 
     public function index()
     {
+        // dd(session()->get('cart'));
         return view('cart.index', ['cart' => session()->get('cart')]);
     }
 
     public function update(Request $request, $id)
     {
+        // Validate the quantity input
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required|integer|min:1', // Ensure quantity is at least 1
+        ]);
+    
+        // Check if the validation fails
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->with('fail', 'Invalid quantity provided!');
+        }
+    
         // Get the cart session
         $cart = session()->get('cart');
-
-        // Update the item in the cart
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] = $request->quantity;
-            $cart[$id]['subtotal'] = $cart[$id]['quantity'] * $cart[$id]['price'];
+    
+        // Check if the cart is not empty and the item exists
+        if (!$cart || !isset($cart[$id])) {
+            return redirect()->back()->with('fail', 'Item not found in the cart!');
         }
-
-        // Update the cart session
+    
+        // Update the quantity and subtotal for the item
+        $cart[$id]['quantity'] = $request->quantity;
+        $cart[$id]['subtotal'] = $cart[$id]['quantity'] * $cart[$id]['price'];
+    
+        // Update the cart session with the modified item
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Cart updated successfully');
+    
+        return redirect()->back()->with('success', 'Cart updated successfully!');
     }
 
     public function destroy($id)

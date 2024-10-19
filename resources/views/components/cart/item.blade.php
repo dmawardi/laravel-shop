@@ -1,30 +1,60 @@
 @props(['id', 'details'])
-<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-    <td class="py-4 px-6">{{ $details['name'] }}</td>
-    <td class="py-4 px-6">${{ number_format($details['price'], 2) }}</td>
-    <td class="py-4 px-6">
-        <form action="{{ route('cart.update', $id) }}" method="POST">
-            @csrf
-            @method('PATCH')
-            <input type="number" name="quantity" value="{{ $details['quantity'] }}"
-                min="1" class="text-center w-16">
-            <button type="submit"
-                class="ml-2 text-white bg-blue-500 hover:bg-blue-600 font-medium rounded-lg text-sm px-4 py-2">Update</button>
-        </form>
-    </td>
-    <td class="py-4 px-6">
-        <div class="flex flex-row justify-end">
-            <span class="my-auto">
-                ${{ number_format($details['subtotal'], 2) }}
-            </span>
-            <form action="{{ route('cart.destroy', $id) }}" class="pl-2" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit"
-                    class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-2 py-1">X</button>
-            </form>
-
+<div class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 flex">
+    <x-cart.table-data class="w-1/12">
+        <input type="checkbox" name="selected[]" value="{{ $id }}" class="form-checkbox h-5 w-5 text-blue-600">
+    </x-cart.table-data>
+    <x-cart.table-data class="w-1/12">
+        <img src="{{ $details['image'] }}" alt="{{ $details['name'] }}" class="w-10 h-10 object-cover">
+    </x-cart.table-data>
+    <x-cart.table-data class="w-10/12">
+        <div>
+            {{ $details['name'] }}
         </div>
-    </td>
+        <div class="flex justify-between">
+            <div class="w-1/2 mt-auto">
+                ${{ number_format($details['price'], 2) }}
+            </div>
+            <div class="w-1/2 flex flex-row justify-end">
+                <form action="{{ route('cart.destroy', $id) }}" class="pl-2 flex align-bottom" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-2 py-1">X</button>
+                </form>
+            
+                <form id="update-form-{{ $id }}" action="{{ route('cart.update', $id) }}" method="POST">
+                    @csrf
+                    @method('PATCH')
+                    <select name="quantity" class="text-center w-16" onchange="updateCart('{{ $id }}', this.value)">
+                        @for($i = 1; $i <= 10; $i++) <!-- Replace 10 with the max quantity limit if needed -->
+                            <option value="{{ $i }}" {{ $details['quantity'] == $i ? 'selected' : '' }}>{{ $i }}</option>
+                        @endfor
+                    </select>
+                </form>
 
-</tr>
+            </div>
+        </div>
+    </x-cart.table-data>
+</div>
+<script>
+    function updateCart(id, quantity) {
+        // Get the form element
+        const form = document.getElementById(`update-form-${id}`);
+        const formData = new FormData(form);
+
+        // Make the PATCH request using fetch API
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        // Redirect to the same page after the update
+        window.location.reload();
+        })
+        .catch(error => {
+            console.error('There was a problem with the update request:', error);
+        });
+    }
+</script>

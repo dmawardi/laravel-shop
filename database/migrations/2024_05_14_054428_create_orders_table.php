@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            // Foreign keys
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('shipping_method_id')->nullable()->constrained()->onDelete('set null');  // Cascade on delete if needed
+            
             $table->string('status');
             $table->decimal('total', 10, 2);
             $table->decimal('subtotal', 10, 2);
@@ -24,9 +27,7 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('shipped_at')->nullable();
             $table->timestamps();
-
-            // Foreign keys
-            $table->foreignId('shipping_method_id')->nullable()->constrained();
+            
         });
     }
 

@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('shipping_information', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
+
+            $table->string('full_name');
             $table->string('address_line1');
             $table->string('address_line2')->nullable();
             $table->string('city');

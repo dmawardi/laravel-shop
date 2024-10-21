@@ -82,6 +82,7 @@ class OrderController extends Controller
 
     public function show(Request $request, Order $order)
     {
+        // dd($order->id);
         return view('order.show', compact('order'));
     }
 }

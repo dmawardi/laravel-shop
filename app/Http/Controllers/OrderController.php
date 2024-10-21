@@ -19,6 +19,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         $request->validate([
             'address_line1' => 'required|string|max:255|min:5',
             'address_line2' => 'nullable|string|max:255',

@@ -10,9 +10,9 @@
                     </span>
                 </div>
                 <div class="flex align-middle m-4">
-                    <a href="#">
-                        Delete
-                    </a>
+                    <button id="delete-selected" class="text-white bg-red-500 hover:bg-red-600 font-medium rounded-lg text-sm px-4 py-2">
+                        Delete Selected
+                    </button>
                 </div>
             </div>
             <div>
@@ -31,3 +31,69 @@
     <p class="mt-6 text-gray-700">Your cart is empty.</p>
     @endif
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the select all checkbox
+        const selectAllCheckbox = document.getElementById('select-all');
+        // Get all item checkboxes
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        
+        // Add event listener to the select all checkbox
+        selectAllCheckbox.addEventListener('change', function () {
+            const isChecked = this.checked;
+            
+            // Toggle the state of each item checkbox
+            itemCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = isChecked;
+            });
+        });
+        
+        
+        // Optionally: Handle individual checkbox change events (if needed)
+        itemCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                // If any item checkbox is unchecked, uncheck the "select all" checkbox
+                if (!this.checked) {
+                    selectAllCheckbox.checked = false;
+                }
+
+                // If all item checkboxes are checked, check the "select all" checkbox
+                if (document.querySelectorAll('.item-checkbox:checked').length === itemCheckboxes.length) {
+                    selectAllCheckbox.checked = true;
+                }
+            });
+        });
+
+        document.getElementById('delete-selected').addEventListener('click', function () {
+        const selectedIds = [];
+        document.querySelectorAll('.item-checkbox:checked').forEach(function (checkbox) {
+            selectedIds.push(checkbox.getAttribute('data-id'));
+        });
+
+        console.log('Clicking bulk delete', selectedIds);
+
+        if (selectedIds.length > 0) {
+            // Send AJAX request for bulk deletion
+            fetch('{{ route('cart.bulk-destroy') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ids: selectedIds })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Failed to delete selected items.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('No items selected for deletion.');
+        }
+        });
+    });
+</script>

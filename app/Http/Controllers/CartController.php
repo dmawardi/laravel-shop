@@ -123,6 +123,30 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product removed from cart successfully');
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        // Get the array of IDs to delete
+        $ids = $request->input('ids');
+
+        if (empty($ids)) {
+            return response()->json(['success' => false, 'message' => 'No items selected for deletion'], 400);
+        }
+
+        // Get the cart session
+        $cart = session()->get('cart');
+
+        // Remove the items from the cart
+        foreach ($ids as $id) {
+            unset($cart[$id]);
+        }
+
+        // Update the cart session
+        session()->put('cart', $cart);
+
+        // Return success response
+        return response()->json(['success' => true, 'message' => 'Selected items removed from cart']);
+    }
+
     public function checkout()
     {
         // Check if user is logged in, if not send to login page

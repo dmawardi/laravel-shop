@@ -1,7 +1,7 @@
 @props(['id', 'details'])
 <div class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 flex">
     <x-cart.table-data class="w-1/12">
-        <input type="checkbox" name="selected[]" value="{{ $id }}" class="form-checkbox h-5 w-5 text-blue-600">
+        <input type="checkbox" name="selected[]" value="{{ $id }}" data-id="{{ $id }}" class="item-checkbox form-checkbox h-5 w-5 text-blue-600">
     </x-cart.table-data>
     <x-cart.table-data class="w-1/12">
         <img src="{{ $details['image'] }}" alt="{{ $details['name'] }}" class="w-10 h-10 object-cover">

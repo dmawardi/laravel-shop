@@ -43,15 +43,19 @@ class OrderController extends Controller
             'total' => $subtotal * 1.1 + 15,
         ]);
 
-        foreach ($cart as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-                'subtotal' => $item['price'] * $item['quantity'],
-            ]);
-        }
+        $orderItems = array_map(function ($item) use ($order) {
+            return [
+            'order_id' => $order->id,
+            'product_id' => $item['product_id'],
+            'quantity' => $item['quantity'],
+            'price' => $item['price'],
+            'subtotal' => $item['price'] * $item['quantity'],
+            'created_at' => now(),
+            'updated_at' => now(),
+            ];
+        }, $cart);
+
+        OrderItem::insert($orderItems);
 
         Payment::create([
             'order_id' => $order->id,

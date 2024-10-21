@@ -20,6 +20,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'full_name' => 'required|string|max:255',
             'address_line1' => 'required|string|max:255|min:5',
             'address_line2' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
@@ -66,6 +67,7 @@ class OrderController extends Controller
 
         ShippingInformation::create([
             'order_id' => $order->id,
+            'full_name' => $request->full_name,
             'address_line1' => $request->address_line1,
             'address_line2' => $request->address_line2,
             'city' => $request->city,

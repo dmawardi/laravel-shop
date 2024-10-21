@@ -1,5 +1,11 @@
 <div>
     <h3 class="font-medium">Shipping Details</h3>
+    
+    {{-- Full Name --}}
+    <x-input-label for="full_name" value="Full Name" />
+    <x-text-input name="full_name" placeholder="Full Name" class="w-full p-2 border rounded mb-2" required
+        :value="old('full_name')" />
+    <x-input-error :messages="$errors->get('full_name')" />
     {{-- Address 1 --}}
     <x-input-label for="address_line1" value="Address 1" />
     <x-text-input name="address_line1" placeholder="Address 1" class="w-full p-2 border rounded mb-2" required

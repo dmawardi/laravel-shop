@@ -20,7 +20,7 @@ canonical="{{ route('order.show', $order->id),  }}">
                             Full name
                         </dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {{ $order->buyer->name }}
+                            {{ $order->full_name }}
                         </dd>
                     </div>
                     {{-- Payment Method --}}
@@ -34,6 +34,10 @@ canonical="{{ route('order.show', $order->id),  }}">
                     </div>
                     {{-- Shipping Address --}}
                     <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt>Full name</dt>
+                        <dd>
+                            {{ $order->shippingInformation->full_name }},
+                        </dd>
                         <dt class="text-sm font-medium text-gray-500">
                             Shipping Address
                         </dt>

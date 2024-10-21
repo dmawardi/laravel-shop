@@ -19,7 +19,6 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
             'address_line1' => 'required|string|max:255|min:5',
             'address_line2' => 'nullable|string|max:255',
@@ -30,7 +29,6 @@ class OrderController extends Controller
             'payment_method' => 'required|string'
         ]);
 
-        // dd($request->all());
         $cart = session('cart');
         $subtotal = array_sum(array_map(function ($item) {
             return $item['price'] * $item['quantity'];
@@ -48,7 +46,7 @@ class OrderController extends Controller
         foreach ($cart as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
-                'product_id' => $item['id'],
+                'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
                 'price' => $item['price'],
                 'subtotal' => $item['price'] * $item['quantity'],
